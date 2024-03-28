@@ -1,0 +1,23 @@
+@media screen and (min-width: 1024px) {
+  .layout {
+    @apply flex flex-row min-h-screen gap-4;
+  }
+  
+  .layout>.nav {
+    @apply w-auto min-w-64;
+  }
+
+  .buttons_wrapper {
+    @apply flex flex-row gap-4 w-full;
+  }
+
+  .cards_wrapper {
+    @apply flex flex-row flex-wrap gap-4 w-full;
+  }
+
+  .cards_wrapper>
+  .card {
+    flex: 1 0 31%;
+    @apply min-w-52 max-w-xs;
+  }
+}

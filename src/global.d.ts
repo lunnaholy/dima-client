@@ -1,0 +1,1 @@
+declare var jivo_api: any;
