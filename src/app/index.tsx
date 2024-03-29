@@ -2,6 +2,7 @@ import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom"
 import { Layout } from "./layout"
 import { IndexLoader } from "./loaders";
 import { LoginPage } from "./pages";
+import { DashboardHome } from "./pages/dashboard";
 
 const router = createBrowserRouter([
   {
@@ -12,6 +13,13 @@ const router = createBrowserRouter([
         loader: IndexLoader,
         element: <LoginPage />
       }
+    ]
+  },
+  {
+    path: "/dashboard",
+    element: <Layout />,
+    children: [
+      { path: "/dashboard", element: <DashboardHome /> }
     ]
   }
 ]);

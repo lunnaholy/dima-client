@@ -1,8 +1,8 @@
 import { useTranslation } from "react-i18next";
-import useTranslations from "../../../hooks/useTranslations";
+import useTranslations from "../../../../hooks/useTranslations";
 import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@nextui-org/react";
-import { Translation as TranslationApi } from "../../../api/lang";
-import { Translation } from "../../../static/translationCodes";
+import { Translation as TranslationApi } from "../../../../api/lang";
+import { Translation } from "../../../../static/translationCodes";
 import { useEffect, useState } from "react";
 
 export function TranslationSelectorModal({ isOpen, onOpenChange }: { isOpen: boolean, onOpenChange: () => void }) {

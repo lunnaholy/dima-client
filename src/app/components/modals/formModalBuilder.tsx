@@ -30,7 +30,7 @@ export interface ModalBuilderProps {
 }
 
 // TODO: перенести рендер форм в отдельный файл
-export function ModalBuilder({
+export function FormModalBuilder({
   title,
   fields,
   defaultValues,
