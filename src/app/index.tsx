@@ -3,6 +3,8 @@ import { Layout } from "./layout"
 import { IndexLoader } from "./loaders";
 import { LoginPage } from "./pages";
 import { DashboardHome } from "./pages/dashboard";
+import {  PrintPage } from "./pages/dashboard/print";
+import { LocksPage } from "./pages/dashboard/locks";
 
 const router = createBrowserRouter([
   {
@@ -19,7 +21,9 @@ const router = createBrowserRouter([
     path: "/dashboard",
     element: <Layout />,
     children: [
-      { path: "/dashboard", element: <DashboardHome /> }
+      { path: "/dashboard", element: <DashboardHome /> },
+      { path: "/dashboard/locks", element: <LocksPage /> },
+      { path: "/dashboard/print", element: <PrintPage /> }
     ]
   }
 ]);
