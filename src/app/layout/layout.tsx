@@ -22,7 +22,7 @@ export function Layout({ children }: { children?: React.ReactNode }) {
         /> */}
         <div className="layout">
           <LayoutNavbar />
-          <div className="layout__content max-h-[calc(100vh-32px)]">
+          <div className="layout__content md:max-h-[calc(100vh-32px)]">
             { children || <Outlet /> }
           </div>
         </div>

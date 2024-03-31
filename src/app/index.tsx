@@ -1,8 +1,8 @@
 import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom"
-import { Layout } from "./layout"
-import { IndexLoader } from "./loaders";
-import { LoginPage } from "./pages";
-import { DashboardHome } from "./pages/dashboard";
+import { Layout } from "./layout/layout"
+import { IndexLoader } from "./loaders/mainLoaders";
+import { LoginPage } from "./pages/auth";
+import { DashboardHome } from "./pages/dashboard/dashboard";
 import {  PrintPage } from "./pages/dashboard/print";
 import { LocksPage } from "./pages/dashboard/locks";
 

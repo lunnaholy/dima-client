@@ -1,5 +1,5 @@
 import { Button, useDisclosure } from "@nextui-org/react";
-import { ScheduleModal } from "../../components/modals/schedule";
+import { ScheduleModal } from "../../components/modals/schedule/scheduleModal";
 
 export function DashboardHome() {
   const scheduleModal = useDisclosure();
