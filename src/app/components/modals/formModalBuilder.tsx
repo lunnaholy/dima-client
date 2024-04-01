@@ -1,6 +1,7 @@
 import { Modal, ModalContent, ModalHeader, ModalBody, Input, ModalFooter, Button } from "@nextui-org/react";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
+import { FormBuilder } from "../forms/formBuilder";
 
 export type InputType = "text" | "password" | "email" | "datetime-local";
 
@@ -29,7 +30,6 @@ export interface ModalBuilderProps {
   onOpenChange: (open: boolean) => void;
 }
 
-// TODO: перенести рендер форм в отдельный файл
 export function FormModalBuilder({
   title,
   fields,
@@ -41,51 +41,16 @@ export function FormModalBuilder({
   onDelete,
   onOpenChange,
 }: ModalBuilderProps) {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue
-  } = useForm({ defaultValues });
+  const formHook = useForm();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoading(false);
   }, [isOpen]);
 
-  useEffect(() => {
-    Object.keys(defaultValues || {}).forEach((key) => {
-      setValue(key, defaultValues?.[key] || "");
-    });
-  }, [defaultValues]);
-
   const submit = (data: any) => {
     setLoading(true);
     onSubmit(data);
-  };
-
-  const renderInput = (field: InputField) => {
-    switch (field.type) {
-      case 'text':
-      case 'password':
-      case 'email':
-      case 'datetime-local':
-        return (
-          <Input
-            {...register(field.name, { required: "Это поле обязательно для заполнения" })}
-            type={field.type}
-            name={field.name}
-            isInvalid={!!errors[field.name]}
-            errorMessage={errors[field.name]?.message}
-            placeholder={field.placeholder}
-            variant="bordered"
-            required
-            label={field.label}
-            defaultValue={String(defaultValues?.[field.name] || "")}
-          />
-        );
-        break;
-    }
   };
 
   return (
@@ -94,13 +59,9 @@ export function FormModalBuilder({
         {(onClose) => (
           <>
             <ModalHeader>{title}</ModalHeader>
-            <form onSubmit={handleSubmit(submit)}>
+            <form onSubmit={formHook.handleSubmit(submit)}>
               <ModalBody>
-                {fields.map((field, index) => (
-                  <div key={index} className="mb-4 block">
-                    {renderInput(field)}
-                  </div>
-                ))}
+                <FormBuilder formHook={formHook} fields={fields} defaultValues={defaultValues} />
               </ModalBody>
               <ModalFooter>
                 <div className="flex flex-grow flex-row gap-2">

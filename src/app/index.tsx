@@ -5,6 +5,7 @@ import { LoginPage } from "./pages/auth";
 import { DashboardHome } from "./pages/dashboard/dashboard";
 import {  PrintPage } from "./pages/dashboard/print";
 import { LocksPage } from "./pages/dashboard/locks";
+import { TicketsPage } from "./pages/dashboard/tickets";
 
 const router = createBrowserRouter([
   {
@@ -23,7 +24,8 @@ const router = createBrowserRouter([
     children: [
       { path: "/dashboard", element: <DashboardHome /> },
       { path: "/dashboard/locks", element: <LocksPage /> },
-      { path: "/dashboard/print", element: <PrintPage /> }
+      { path: "/dashboard/print", element: <PrintPage /> },
+      { path: "/dashboard/tickets", element: <TicketsPage /> }
     ]
   }
 ]);

@@ -33,7 +33,7 @@ export default function LayoutNavbar() {
     path: '/dashboard',
     icon: FaHouse,
     title: 'Главная',
-    color: "default"
+    color: "info"
   }, {
     path: '/dashboard/locations',
     icon: FaBuilding,
@@ -49,6 +49,11 @@ export default function LayoutNavbar() {
     icon: FaPrint,
     title: 'Печать',
     color: "warning"
+  }, {
+    path: '/dashboard/tickets',
+    icon: FaNoteSticky,
+    title: 'Тикеты',
+    color: "default"
   }];
 
   const variants = {
