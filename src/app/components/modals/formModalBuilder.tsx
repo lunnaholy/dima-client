@@ -41,7 +41,7 @@ export function FormModalBuilder({
   onDelete,
   onOpenChange,
 }: ModalBuilderProps) {
-  const formHook = useForm();
+  const formHook = useForm({ defaultValues});
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
