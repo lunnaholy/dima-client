@@ -1,6 +1,7 @@
-import { Button } from "@nextui-org/react";
+import { Button, useDisclosure } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { Ticket } from "../../components/ticket/ticket";
+import { OpenTicketModal } from "../../components/modals/tickets/openTicketModal";
 
 export enum TicketStatus {
   READ = "Прочитано",
@@ -17,6 +18,7 @@ export interface Ticket {
 
 export function TicketsPage() {
   const [tickets, setTickets] = useState<Ticket[]>([]);
+  const openTicketModalDisclosure = useDisclosure();
 
   useEffect(() => {
     setTickets([
@@ -28,12 +30,13 @@ export function TicketsPage() {
 
   return (
     <>
+      <OpenTicketModal isOpen={openTicketModalDisclosure.isOpen} onOpenChange={openTicketModalDisclosure.onOpenChange} onSubmit={console.log} />
       <div className="flex flex-col gap-2 p-2 md:p-4 select-none cursor-pointer">
         <span className="text-2xl font-bold">Тикеты</span>
         <span className="text-sm max-w-96">
           Отправьте запрос чего-то там администратору Вашего коворкинга.
         </span>
-        <Button color="primary" size="sm">Новое обращение</Button>
+        <Button color="primary" size="sm" onClick={openTicketModalDisclosure.onOpen}>Новое обращение</Button>
         <div className="flex flex-col gap-2 mt-2">
           {tickets.map((ticket) => (
             <Ticket key={ticket.id} ticket={ticket} />

@@ -6,6 +6,7 @@ import { DashboardHome } from "./pages/dashboard/dashboard";
 import {  PrintPage } from "./pages/dashboard/print";
 import { LocksPage } from "./pages/dashboard/locks";
 import { TicketsPage } from "./pages/dashboard/tickets";
+import { TicketPage } from "./pages/dashboard/ticket/ticket";
 
 const router = createBrowserRouter([
   {
@@ -25,7 +26,9 @@ const router = createBrowserRouter([
       { path: "/dashboard", element: <DashboardHome /> },
       { path: "/dashboard/locks", element: <LocksPage /> },
       { path: "/dashboard/print", element: <PrintPage /> },
-      { path: "/dashboard/tickets", element: <TicketsPage /> }
+      { path: "/dashboard/tickets", element: <TicketsPage /> },
+      { path: "/dashboard/tickets/1", element: <TicketPage /> },
+
     ]
   }
 ]);
