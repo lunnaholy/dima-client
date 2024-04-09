@@ -7,15 +7,21 @@ import {  PrintPage } from "./pages/dashboard/print";
 import { LocksPage } from "./pages/dashboard/locks";
 import { TicketsPage } from "./pages/dashboard/tickets";
 import { TicketPage } from "./pages/dashboard/ticket/ticket";
+import { ResetPage } from "./pages/reset";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <><Outlet /></>,
+    element: <main id="main"><Outlet /></main>,
     children: [
       { path: "/",
         loader: IndexLoader,
         element: <LoginPage />
+      },
+      {
+        path: "/reset",
+        loader: IndexLoader,
+        element: <ResetPage />
       }
     ]
   },

@@ -18,3 +18,14 @@ export function getDayName(day: string): string {
     default: return "";
   }
 }
+
+export function getLottieOptions(animationData: any) {
+  return {
+    loop: true,
+    autoplay: true, 
+    animationData,
+    rendererSettings: {
+      preserveAspectRatio: 'xMidYMid slice'
+    }
+  };
+}

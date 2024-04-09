@@ -1,5 +1,6 @@
-import { Button, Input, Link } from "@nextui-org/react";
+import { Button, Input } from "@nextui-org/react";
 import { useCallback, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 export function LoginPage() {
   const [displayPassword, setDisplayPassword] = useState(false);
@@ -72,7 +73,7 @@ export function LoginPage() {
           </div>
           <div className="mt-4 flex flex-col gap-0 items-center justify-center font-semibold">
             <span>Нет можете войти?</span>
-            <Link color="primary" className="underline">Восстановить аккаунт</Link>
+            <Link className="text-primary" to="/reset">Восстановить аккаунт</Link>
           </div>
         </div>
       </div>
