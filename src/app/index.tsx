@@ -8,6 +8,7 @@ import { LocksPage } from "./pages/dashboard/locks";
 import { TicketsPage } from "./pages/dashboard/tickets";
 import { TicketPage } from "./pages/dashboard/ticket/ticket";
 import { ResetPage } from "./pages/reset";
+import { EmployeesPage } from "./pages/dashboard/employees";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,7 @@ const router = createBrowserRouter([
       { path: "/dashboard/print", element: <PrintPage /> },
       { path: "/dashboard/tickets", element: <TicketsPage /> },
       { path: "/dashboard/tickets/1", element: <TicketPage /> },
+      { path: "/dashboard/employees", element: <EmployeesPage /> },
 
     ]
   }

@@ -15,9 +15,9 @@ export function EmailSentModal({ title, isOpen, onOpenChange }: { title: string,
               <span className="text-center">Уже отправили на вашу почту ссылку для сброса пароля.</span>
               <span className="text-center">Проверьте свой почтовый ящик, а так же папки “Спам” и “Промо-акции”.</span>
               <div className="flex flex-row p-2">
-                <Lottie
+                {/* <Lottie
                   animationData={EmailSent}
-                  />
+                  /> */}
               </div>
               <Button color="primary" variant="solid" size="lg" className="font-medium w-full">Отправить заново</Button>
               <Link to="#" className="text-primary font-medium">У меня нет доступа к почте</Link>

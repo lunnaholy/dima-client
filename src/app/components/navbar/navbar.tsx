@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { api as _api } from "../../../api";
-import { FaBriefcase, FaBuilding, FaChartPie, FaCheck, FaDoorClosed, FaEarthEurope, FaGear, FaHouse, FaLock, FaNoteSticky, FaPencil, FaPhone, FaPlay, FaPrint } from "react-icons/fa6";
+import { FaBriefcase, FaBuilding, FaChartPie, FaCheck, FaDoorClosed, FaEarthEurope, FaGear, FaHouse, FaLock, FaNoteSticky, FaPencil, FaPhone, FaPlay, FaPrint, FaUsers } from "react-icons/fa6";
 import { HiArrowRight, HiArrowLeft } from "react-icons/hi2";
 import { DarkModeToggler } from "../darkmode/darkModeToggler";
 
@@ -33,26 +33,31 @@ export default function LayoutNavbar() {
     path: '/dashboard',
     icon: FaHouse,
     title: 'Главная',
-    color: "info"
+    color: "default"
   }, {
     path: '/dashboard/locations',
     icon: FaBuilding,
     title: 'Переговорные',
-    color: "secondary"
+    color: "default"
   }, {
     path: '/dashboard/locks',
     icon: FaLock,
     title: 'Замки',
-    color: "primary"
+    color: "default"
   }, {
     path: '/dashboard/print',
     icon: FaPrint,
     title: 'Печать',
-    color: "warning"
+    color: "default"
   }, {
     path: '/dashboard/tickets',
     icon: FaNoteSticky,
     title: 'Тикеты',
+    color: "default"
+  }, {
+    path: '/dashboard/employees',
+    icon: FaUsers,
+    title: 'Сотрудники',
     color: "default"
   }];
 
@@ -154,37 +159,6 @@ export default function LayoutNavbar() {
 function NavLink({ link, collapsed, isActive, color = "default" }: { link: { icon: any, title: any, path: string }, collapsed: boolean, isActive: boolean, color?: string }) {
   return (
     <>
-      {/* {isActive && (
-        <Link
-          to={link.path}
-          className={
-            `flex flex-row items-center gap-4 p-2 rounded-md bg-primary-100 text-primary-500 transition-all`
-          }
-        >
-          <div>
-            <link.icon className="text-medium" />
-          </div>
-          <motion.div animate={{ opacity: collapsed ? 0 : 1 }}>
-            <span>{link.title}</span>
-          </motion.div>
-        </Link>
-      )}
-
-      {!isActive && (
-        <Link
-          to={link.path}
-          className={
-            `flex flex-row items-center gap-4 p-2 rounded-md text-foreground-600 hover:bg-primary-100 hover:text-primary-500 transition-all`
-          }
-        >
-          <div>
-            <link.icon className="text-medium" />
-          </div>
-          <motion.div animate={{ opacity: collapsed ? 0 : 1 }}>
-            <span>{link.title}</span>
-          </motion.div>
-        </Link>
-      )} */}
       <Link
         to={link.path}
         className={
@@ -192,7 +166,7 @@ function NavLink({ link, collapsed, isActive, color = "default" }: { link: { ico
           `${collapsed ? 'hover:bg-opacity-0' : 'px-2'}`
         }
       >
-        <div className={`flex flex-col items-center justify-center min-w-8 min-h-8 rounded-lg bg-${color} bg-opacity-30 text-${color}`}>
+        <div className={`flex flex-col items-center justify-center min-w-8 min-h-8 rounded-lg bg-${color} bg-opacity-30`}>
           <link.icon className="text-medium" />
         </div>
         <motion.div animate={{ opacity: collapsed ? 0 : 1 }}>
