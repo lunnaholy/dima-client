@@ -2,6 +2,10 @@ export function getNormalizedDate(date: string): string {
   return new Date(date).toLocaleString().replace(/\//g, ".").slice(0, -3)
 }
 
+export function getNormalizedDateTime(date: string): string {
+  return new Date(date).toLocaleString().replace(/\//g, ".").slice(0, -3)
+}
+
 export function getPortal() {
   return document.getElementById("main")!
 }
