@@ -1,5 +1,9 @@
+export function getNormalizedTime(date: string): string {
+  return new Date(date).toLocaleString().slice(12, 17)
+}
+
 export function getNormalizedDate(date: string): string {
-  return new Date(date).toLocaleString().replace(/\//g, ".").slice(0, -3)
+  return new Date(date).toLocaleString().slice(0, 10).replace(/\//g, ".")
 }
 
 export function getNormalizedDateTime(date: string): string {

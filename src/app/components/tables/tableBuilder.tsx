@@ -63,15 +63,15 @@ export function TableBuilder({ rowsPerPage = 10, columns, data }: TableBuilderPr
 
   function sort<T extends T[]>(items: T[], sortDescriptor: SortDescriptor): T[] {
     const { column, direction } = sortDescriptor;
-  
+
     if (items.length === 0 || !(column in items[0])) return items;
-  
+
     return [...items].sort((a, b) => {
       const aValue = a[column as keyof T];
       const bValue = b[column as keyof T];
-  
+
       if (aValue === bValue) return 0;
-  
+
       const order = direction === 'ascending' ? 1 : -1;
       return (aValue > bValue ? 1 : -1) * order;
     });
@@ -105,7 +105,13 @@ export function TableBuilder({ rowsPerPage = 10, columns, data }: TableBuilderPr
         </TableHeader>
         <TableBody items={items} emptyContent={"Нет данных."}>
           {(item) => (
-            <RenderRow row={item} columns={columns} />
+            <TableRow key={(item as any).id}>
+              {columns.map((column) => (
+                <TableCell key={column.key}>
+                  {renderCell(item, column)}
+                </TableCell>
+              ))}
+            </TableRow>
           )}
         </TableBody>
       </Table>
@@ -113,48 +119,20 @@ export function TableBuilder({ rowsPerPage = 10, columns, data }: TableBuilderPr
   )
 }
 
-export function RenderRow({ row, columns }: { row: any, columns: Column[] }) {
-  return (
-    <TableRow key={(row as any).id}>
-      {columns.map((column) => (
-        <RenderCell key={column.key} row={row} column={column} />
-      ))}
-    </TableRow>
-  )
-}
-
-export function RenderCell({ row, column }: { row: any, column: Column }) {
-  const [useCustomRenderer, _setCustomRenderer] = React.useState(column.type == ColumnType.Custom);
-  const [cellValue, _setCellValue] = React.useState(row[column.key]);
-  const [columnType, _setColumnType] = React.useState(column.type);
-  const [renderedValue, setRenderedValue] = React.useState<string | null>(null);
-
-  React.useEffect(() => {
-    if (columnType == ColumnType.Date) {
-      setRenderedValue(getNormalizedDate(cellValue));
-    } else if (columnType == ColumnType.DateTime) {
-      setRenderedValue(getNormalizedDateTime(cellValue));
-    } else if (columnType == ColumnType.Number) {
-      setRenderedValue(cellValue.toString());
-    } else if (columnType == ColumnType.Boolean) {
-      setRenderedValue(cellValue ? "да" : "нет");
-    } else if (columnType == ColumnType.String) {
-      setRenderedValue(cellValue);
-    } else if (useCustomRenderer) {
-      setRenderedValue(column.render!(cellValue, row));
-    }
-  }, [row, column]);
-
-  return (
-    <TableCell>
-      <>
-        {renderedValue && (
-          {renderedValue}
-        )}
-        {!renderedValue && (
-          <span>н/д</span> 
-        )}
-      </>
-    </TableCell>
-  )
+function renderCell(row: any, column: Column) {
+  if (column.type == ColumnType.Date) {
+    return getNormalizedDate(row[column.key]);
+  } else if (column.type == ColumnType.DateTime) {
+    return getNormalizedDateTime(row[column.key]);
+  } else if (column.type == ColumnType.Number) {
+    return row[column.key].toString();
+  } else if (column.type == ColumnType.Boolean) {
+    return row[column.key] ? "да" : "нет";
+  } else if (column.type == ColumnType.String) {
+    return row[column.key];
+  } else if (column.type == ColumnType.Custom) {
+    return column.render!(row[column.key], row);
+  } else {
+    return "н/д";
+  }
 }

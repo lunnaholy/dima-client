@@ -10,6 +10,8 @@ import { TicketPage } from "./pages/dashboard/ticket/ticket";
 import { ResetPage } from "./pages/reset";
 import { EmployeesPage } from "./pages/dashboard/employees";
 import { TestPage } from "./pages/dashboard/test";
+import { Provider } from "react-redux";
+import rootStore from "./store";
 
 const router = createBrowserRouter([
   {
@@ -38,13 +40,14 @@ const router = createBrowserRouter([
       { path: "/dashboard/tickets/1", element: <TicketPage /> },
       { path: "/dashboard/employees", element: <EmployeesPage /> },
       { path: "/dashboard/test", element: <TestPage /> },
-
     ]
   }
 ]);
 
 export function App() {
   return (
-    <RouterProvider router={router} />
+    <Provider store={rootStore}>
+      <RouterProvider router={router} />
+    </Provider>
   )
 }

@@ -1,21 +1,47 @@
-import { Column, TableBuilder } from "../../components/tables/tableBuilder";
+import { Button } from "@nextui-org/react";
+import { NotificationsList } from "../../components/notifications/notifications";
+import { Column, ColumnType, TableBuilder } from "../../components/tables/tableBuilder";
+import { addNotification } from "../../store/notifications/reducer";
+import { useEffect } from "react";
+import { useAppDispatch } from "../../../hooks/useAppDispatch";
+import { NotificationIcon } from "../../store/notifications/types";
 
 export function TestPage() {
+  const dispatch = useAppDispatch();
+
+  const createNotification = () => {
+    console.log("FIRED");
+    dispatch(addNotification({
+      id: Math.floor(Math.random() * 10000),
+      datetime: new Date().toISOString(),
+      title: "Hello, world!",
+      message: "В рендер-движке можно будет прописать уведомления с кнопками, при нажатии на которые будет выполняться какое-то действие",
+      icon: NotificationIcon.DEFAULT
+    }));
+  };
+
+  useEffect(() => {
+    createNotification();
+  }, []);
+
   const columns: Column[] = [
     {
       key: "id",
       label: "ID",
-      sortable: true
+      sortable: true,
+      type: ColumnType.Number
     },
     {
       key: "name",
       label: "Name",
-      sortable: true
+      sortable: true,
+      type: ColumnType.String
     },
     {
       key: "age",
       label: "Age",
-      sortable: true
+      sortable: true,
+      type: ColumnType.Number
     }
   ];
 
@@ -32,6 +58,8 @@ export function TestPage() {
         data={items}
         rowsPerPage={10}
         />
+      <NotificationsList />
+      <Button onClick={createNotification}>Add notification</Button>
     </>
   )
 }
