@@ -10,7 +10,6 @@ export function TestPage() {
   const dispatch = useAppDispatch();
 
   const createNotification = () => {
-    console.log("FIRED");
     dispatch(addNotification({
       id: Math.floor(Math.random() * 10000),
       datetime: new Date().toISOString(),
@@ -58,7 +57,7 @@ export function TestPage() {
         data={items}
         rowsPerPage={10}
         />
-      <NotificationsList />
+      {/* <NotificationsList /> */}
       <Button onClick={createNotification}>Add notification</Button>
     </>
   )

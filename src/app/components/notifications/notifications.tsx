@@ -1,23 +1,28 @@
 import { useAppDispatch } from "../../../hooks/useAppDispatch";
 import { useAppSelector } from "../../../hooks/useAppSelector";
 import { FaCircleInfo, FaFolderMinus, FaTrashCan } from "react-icons/fa6";
-import { clearNotifications } from "../../store/notifications/reducer";
+import { clearNotifications, markAsReaded } from "../../store/notifications/reducer";
 import { INotification, NotificationIcon } from "../../store/notifications/types";
 import { getNormalizedDate, getNormalizedTime } from "../../../utils";
+import { useEffect } from "react";
 
 export function NotificationsList() {
   const dispatch = useAppDispatch(); 
   const notifications = useAppSelector(state => state.notifications.notifications);
 
+  useEffect(() => {
+    dispatch(markAsReaded());
+  }, []);
+
   return (
-    <div className="max-w-sm bg-white">
-      <div className="flex justify-between items-center">
+    <div className="max-w-sm w-full">
+      <div className="flex justify-between items-center pl-4 pt-4 pr-4">
         <span className="text-xl font-bold select-none">Уведомления</span>
         <span className="text-zinc-500 cursor-pointer" onClick={() => dispatch(clearNotifications())}>
           <FaTrashCan />
         </span>
       </div>
-      <div className="mt-4 flex flex-col w-full gap-4">
+      <div className="mt-4 flex flex-col w-full gap-4 max-h-[40vh] overflow-auto p-4 mb-4">
         {notifications.length === 0 && (
           <div className="h-64 flex flex-col gap-8 items-center justify-center">
             <span className="text-zinc-500 text-3xl">
@@ -71,10 +76,11 @@ function getNotificationTextColor(icon: NotificationIcon) {
 };
 
 function getNotificationIcon(icon: NotificationIcon, color: string = "text-zinc-500 dark:text-zinc-400") {
+  const mainClass = `text-md`;
   switch (icon) {
     case NotificationIcon.DEFAULT:
-      return <FaCircleInfo className={color} />;
+      return <FaCircleInfo className={`${mainClass} ${color}`} />;
     default:
-      return <FaCircleInfo className={color} />;
+      return <FaCircleInfo className={`${mainClass} ${color}`} />;
   };
 };

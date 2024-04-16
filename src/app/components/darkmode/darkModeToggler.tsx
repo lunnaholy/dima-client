@@ -16,7 +16,7 @@ export function DarkModeToggler({ collapsed }: { collapsed: boolean }) {
       `flex flex-row items-center gap-4 py-2 rounded-md text-foreground-600 bg-default bg-opacity-0 hover:bg-opacity-30 transition-all cursor-pointer ` +
       `${collapsed ? 'hover:bg-opacity-0' : 'px-2'}`
     }>
-      <button className={`flex flex-col items-center justify-center min-w-8 min-h-8 rounded-lg bg-${color} bg-opacity-10 text-${color}`}>
+      <button className={`flex flex-col items-center justify-center min-w-8 min-h-8 rounded-lg bg-${color} bg-opacity-10`}>
         {darkMode.value ? <HiSun className="text-medium" /> : <HiMoon className="text-medium" />}
       </button>
 

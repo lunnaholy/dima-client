@@ -1,33 +1,35 @@
 import { Card, Divider, Popover, PopoverTrigger, Avatar, PopoverContent, Listbox, ListboxItem } from "@nextui-org/react";
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { api as _api } from "../../../api";
-import { FaBriefcase, FaBuilding, FaChartPie, FaCheck, FaDoorClosed, FaEarthEurope, FaGear, FaHouse, FaLock, FaNoteSticky, FaPencil, FaPhone, FaPlay, FaPrint, FaUsers } from "react-icons/fa6";
+import {
+  FaBell,
+  FaBriefcase,
+  FaBuilding,
+  FaDoorClosed,
+  FaGear,
+  FaHouse,
+  FaLock,
+  FaMoneyBill,
+  FaNoteSticky,
+  FaPencil,
+  FaPrint,
+  FaUsers
+} from "react-icons/fa6";
 import { HiArrowRight, HiArrowLeft } from "react-icons/hi2";
 import { DarkModeToggler } from "../darkmode/darkModeToggler";
+import { NotificationsList } from "../notifications/notifications";
+import { useAppSelector } from "../../../hooks/useAppSelector";
 
 export default function LayoutNavbar() {
-  // TODO: _setAdminUser
-  const [adminUser, _setAdminUser] = useState<any | null>(null);
   const [collapsed, setCollapsed] = useState(localStorage.getItem('sidebarCollapsed') === 'true' ? true : false);
-  const [currentPath, setCurrentPath] = useState(window.location.pathname);
   const location = useLocation();
-  const navigate = useNavigate();
-
-  // TODO: 
-  // useEffect(() => {
-  //   api.static.getMe().then(data => setAdminUser(data.data));
-  // }, []);
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
     localStorage.setItem('sidebarCollapsed', (!collapsed).toString());
   }
-
-  useEffect(() => {
-    setCurrentPath(location.pathname);
-  }, [location]);
 
   const links = [{
     path: '/dashboard',
@@ -59,6 +61,16 @@ export default function LayoutNavbar() {
     icon: FaUsers,
     title: 'Сотрудники',
     color: "default"
+  }, {
+    path: '/dashboard/payments',
+    icon: FaMoneyBill,
+    title: 'Платежи',
+    color: "default"
+  }, {
+    path: '/dashboard/test',
+    icon: FaBriefcase,
+    title: 'Тест',
+    color: "default"
   }];
 
   const variants = {
@@ -67,23 +79,6 @@ export default function LayoutNavbar() {
     },
     expanded: {
       width: 288
-    }
-  }
-
-  const onUserAction = (key: any) => {
-    switch (key) {
-      case 'profile':
-        navigate('/dashboard/me');
-        break;
-      case 'settings':
-        navigate('/dashboard/settings');
-        break;
-      case 'exit':
-        // TODO:
-        // api.auth.logout();
-        break;
-      default:
-        break;
     }
   }
 
@@ -116,7 +111,6 @@ export default function LayoutNavbar() {
         {links.map(link => (
           <NavLink
             key={link.path}
-            isActive={currentPath === link.path}
             link={link}
             collapsed={collapsed}
             color={link.color}
@@ -126,37 +120,96 @@ export default function LayoutNavbar() {
 
       <div className="flex flex-col h-full justify-end gap-4">
         <DarkModeToggler collapsed={collapsed} />
+        <Notifications collapsed={collapsed} />
         <Divider />
-        <Popover showArrow={false} placement="top" portalContainer={document.getElementById("main")!}>
-          <PopoverTrigger className="shadow-none border-none bg-none outline-none">
-            <button className="inline-flex items-center gap-2 rounded-small outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 z-10 aria-expanded:scale-[0.97] aria-expanded:opacity-70 subpixel-antialiased transition-transform">
-              <div>
-                <Avatar size='sm' name={`${adminUser?.first_name.split("")[0]}`} />
-              </div>
-              <motion.div animate={{ opacity: collapsed ? 0 : 1 }} className="flex flex-col gap-1">
-                <span className='text-sm text-nowrap'>{`${adminUser?.first_name} ${adminUser?.last_name}`}</span>
-              </motion.div>
-            </button>
-          </PopoverTrigger>
-          <PopoverContent className='p-1 min-w-48'>
-            <Listbox
-              aria-label="Действия"
-              onAction={onUserAction}
-            >
-              <ListboxItem startContent={<FaPencil />} key="profile">Профиль</ListboxItem>
-              <ListboxItem startContent={<FaGear />} key="settings">Настройки</ListboxItem>
-              <ListboxItem startContent={<FaDoorClosed />} key="exit" className="text-danger" color="danger">
-                Выйти
-              </ListboxItem>
-            </Listbox>
-          </PopoverContent>
-        </Popover>
+        <Account collapsed={collapsed} />
       </div>
     </Card>
   );
 }
 
-function NavLink({ link, collapsed, isActive, color = "default" }: { link: { icon: any, title: any, path: string }, collapsed: boolean, isActive: boolean, color?: string }) {
+function Notifications({ collapsed }: { collapsed: boolean }) {
+  const unreadCount = useAppSelector(state => state.notifications.unreadCount);
+
+  return (
+    <Popover showArrow={false} placement="top" portalContainer={document.getElementById("main")!}>
+      <PopoverTrigger className="shadow-none border-none bg-none outline-none">
+        <button
+          className={
+            `flex flex-row items-center gap-4 py-2 rounded-md text-foreground-600 bg-default bg-opacity-0 hover:bg-opacity-30 transition-all ` +
+            `${collapsed ? 'hover:bg-opacity-0' : 'px-2'}`
+          }>
+          <div className={`flex flex-col items-center justify-center min-w-8 min-h-8 rounded-lg bg-default bg-opacity-30`}>
+            <FaBell className="text-medium top-2 relative" />
+            <span className={`top-2 left-4 w-4 h-4 relative z-10 rounded-full text-[10px] 
+              ${unreadCount > 0 ? 'bg-danger animate-pulse' : 'bg-default'}`}>{unreadCount}</span>
+          </div>
+          <motion.div animate={{ opacity: collapsed ? 0 : 1 }}>
+            <span className="text-sm font-semibold">Уведомления</span>
+          </motion.div>
+        </button>
+      </PopoverTrigger>
+      <PopoverContent className='min-w-96 max-w-96'>
+        <NotificationsList />
+      </PopoverContent>
+    </Popover>
+  )
+};
+
+function Account({ collapsed }: { collapsed: boolean }) {
+  const [adminUser, _setAdminUser] = useState<any | null>(null);
+  const navigate = useNavigate();
+
+  // TODO: 
+  // useEffect(() => {
+  //   api.static.getMe().then(data => setAdminUser(data.data));
+  // }, []);
+
+  const onUserAction = (key: any) => {
+    switch (key) {
+      case 'profile':
+        navigate('/dashboard/me');
+        break;
+      case 'settings':
+        navigate('/dashboard/settings');
+        break;
+      case 'exit':
+        // TODO:
+        // api.auth.logout();
+        break;
+      default:
+        break;
+    }
+  }
+
+  return (
+    <Popover showArrow={false} placement="top" portalContainer={document.getElementById("main")!}>
+      <PopoverTrigger className="shadow-none border-none bg-none outline-none">
+        <button className="inline-flex items-center gap-2 rounded-small outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 z-10 subpixel-antialiased transition-transform">
+          <div>
+            <Avatar size='sm' name={`${adminUser?.first_name.split("")[0]}`} />
+          </div>
+          <motion.div animate={{ opacity: collapsed ? 0 : 1 }} className="flex flex-col gap-1">
+            <span className='text-sm text-nowrap'>{`${adminUser?.first_name} ${adminUser?.last_name}`}</span>
+          </motion.div>
+        </button>
+      </PopoverTrigger>
+      <PopoverContent className='p-1 min-w-48'>
+        <Listbox
+          aria-label="Действия"
+          onAction={onUserAction}>
+          <ListboxItem startContent={<FaPencil />} key="profile">Профиль</ListboxItem>
+          <ListboxItem startContent={<FaGear />} key="settings">Настройки</ListboxItem>
+          <ListboxItem startContent={<FaDoorClosed />} key="exit" className="text-danger" color="danger">
+            Выйти
+          </ListboxItem>
+        </Listbox>
+      </PopoverContent>
+    </Popover>
+  );
+}
+
+function NavLink({ link, collapsed, color = "default" }: { link: { icon: any, title: any, path: string }, collapsed: boolean, color?: string }) {
   return (
     <>
       <Link

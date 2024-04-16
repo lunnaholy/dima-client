@@ -14,7 +14,7 @@ export function EmployeesPage() {
         <span className="text-sm max-w-96">
           В этом разделе Вы можете управлять сотрудниками Вашей компании.
         </span>
-        <Button size="sm" color="primary" variant="solid" className="max-w-fit" onClick={inviteModal.onOpen}>Пригласить сотрудника</Button>
+        <Button color="primary" variant="solid" className="max-w-fit" onClick={inviteModal.onOpen}>Пригласить сотрудника</Button>
         <div className="flex flex-col gap-3 p-3 max-w-3xl">
           <Employee employee="Иван Иванов" />
           <Employee employee="Петр Петров" />
