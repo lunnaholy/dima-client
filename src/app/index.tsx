@@ -13,6 +13,7 @@ import { TestPage } from "./pages/dashboard/test";
 import { Provider } from "react-redux";
 import rootStore from "./store";
 import { PaymentPage } from "./pages/dashboard/payments";
+import { PaymentInfoPage } from "./pages/dashboard/payment/payment";
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,7 @@ const router = createBrowserRouter([
       { path: "/dashboard/tickets/1", element: <TicketPage /> },
       { path: "/dashboard/employees", element: <EmployeesPage /> },
       { path: "/dashboard/payments", element: <PaymentPage /> },
+      { path: "/dashboard/payments/1", element: <PaymentInfoPage /> },
       { path: "/dashboard/test", element: <TestPage /> },
     ]
   }
