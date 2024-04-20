@@ -14,6 +14,7 @@ import { Provider } from "react-redux";
 import rootStore from "./store";
 import { PaymentPage } from "./pages/dashboard/payments";
 import { PaymentInfoPage } from "./pages/dashboard/payment/payment";
+import { DocumentsPage } from "./pages/dashboard/documents";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,7 @@ const router = createBrowserRouter([
       { path: "/dashboard/employees", element: <EmployeesPage /> },
       { path: "/dashboard/payments", element: <PaymentPage /> },
       { path: "/dashboard/payments/1", element: <PaymentInfoPage /> },
+      { path: "/dashboard/documents", element: <DocumentsPage /> },
       { path: "/dashboard/test", element: <TestPage /> },
     ]
   }
