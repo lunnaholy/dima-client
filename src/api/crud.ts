@@ -1,6 +1,6 @@
-export interface APIResponse<T> {
-  result: "success" | "error";
-  details?: string;
+export interface ApiResponse<T> {
+  message: string;
+  result: string;
   data: T;
 }
 
@@ -23,7 +23,7 @@ export default {
       mode: 'cors'
     });
 
-    if(response.status == 401) {
+    if(response.status == 401 && sendAuthorization == true) {
       localStorage.removeItem('access_token');
       window.location.href = '/';
     }
@@ -43,7 +43,7 @@ export default {
       mode: 'cors'
     });
 
-    if(response.status == 401) {
+    if(response.status == 401 && sendAuthorization == true) {
       localStorage.removeItem('access_token');
       window.location.href = '/';
     }
@@ -63,7 +63,7 @@ export default {
       mode: 'cors'
     });
 
-    if(response.status == 401) {
+    if(response.status == 401 && sendAuthorization == true) {
       localStorage.removeItem('access_token');
       window.location.href = '/';
     }
@@ -82,7 +82,7 @@ export default {
       mode: 'cors'
     });
 
-    if(response.status == 401) {
+    if(response.status == 401 && sendAuthorization == true) {
       localStorage.removeItem('access_token');
       window.location.href = '/';
     }

@@ -1,7 +1,7 @@
-import { LangAPI } from "./lang";
+import { AuthAPI } from "./auth/auth";
 
-const baseUrl = "https://api.elasticwork.space:8000/";
+const baseUrl = "http://212.109.223.199:8090/client";
 
 export const api = {
-  translations: LangAPI(baseUrl)
+  auth: AuthAPI(baseUrl)
 }

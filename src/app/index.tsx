@@ -1,6 +1,6 @@
-import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom"
-import { Layout } from "./layout/layout"
-import { IndexLoader } from "./loaders/mainLoaders";
+import { RouterProvider, createBrowserRouter } from "react-router-dom"
+import { Layout } from "./layout/mainLayout";
+import { DashboardLoader, IndexLoader } from "./loaders/mainLoaders";
 import { LoginPage } from "./pages/auth";
 import { DashboardHome } from "./pages/dashboard/dashboard";
 import {  PrintPage } from "./pages/dashboard/print";
@@ -15,11 +15,13 @@ import rootStore from "./store";
 import { PaymentPage } from "./pages/dashboard/payments";
 import { PaymentInfoPage } from "./pages/dashboard/payment/payment";
 import { DocumentsPage } from "./pages/dashboard/documents";
+import { AuthLayout } from "./layout/authLayout";
+import 'react-toastify/dist/ReactToastify.css';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <main id="main"><Outlet /></main>,
+    element: <AuthLayout />,
     children: [
       { path: "/",
         loader: IndexLoader,
@@ -35,6 +37,7 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <Layout />,
+    loader: DashboardLoader,
     children: [
       { path: "/dashboard", element: <DashboardHome /> },
       { path: "/dashboard/locks", element: <LocksPage /> },

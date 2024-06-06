@@ -1,8 +1,8 @@
 import { Card, Divider, Popover, PopoverTrigger, Avatar, PopoverContent, Listbox, ListboxItem } from "@nextui-org/react";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { useLocation, useNavigate, Link } from "react-router-dom";
-import { api as _api } from "../../../api";
+import { useNavigate, Link } from "react-router-dom";
+import { api as _api, api } from "../../../api";
 import {
   FaBell,
   FaBriefcase,
@@ -24,7 +24,6 @@ import { useAppSelector } from "../../../hooks/useAppSelector";
 
 export default function LayoutNavbar() {
   const [collapsed, setCollapsed] = useState(localStorage.getItem('sidebarCollapsed') === 'true' ? true : false);
-  const location = useLocation();
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
@@ -157,13 +156,8 @@ function Notifications({ collapsed }: { collapsed: boolean }) {
 };
 
 function Account({ collapsed }: { collapsed: boolean }) {
-  const [adminUser, _setAdminUser] = useState<any | null>(null);
   const navigate = useNavigate();
-
-  // TODO: 
-  // useEffect(() => {
-  //   api.static.getMe().then(data => setAdminUser(data.data));
-  // }, []);
+  const user = useAppSelector(state => state.user.currentUser);
 
   const onUserAction = (key: any) => {
     switch (key) {
@@ -174,8 +168,7 @@ function Account({ collapsed }: { collapsed: boolean }) {
         navigate('/dashboard/settings');
         break;
       case 'exit':
-        // TODO:
-        // api.auth.logout();
+        api.auth.logout();
         break;
       default:
         break;
@@ -187,10 +180,10 @@ function Account({ collapsed }: { collapsed: boolean }) {
       <PopoverTrigger className="shadow-none border-none bg-none outline-none">
         <button className="inline-flex items-center gap-2 rounded-small outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 z-10 subpixel-antialiased transition-transform">
           <div>
-            <Avatar size='sm' name={`${adminUser?.first_name.split("")[0]}`} />
+            <Avatar size='sm' name={`${user.first_name?.split("")[0]}`} />
           </div>
           <motion.div animate={{ opacity: collapsed ? 0 : 1 }} className="flex flex-col gap-1">
-            <span className='text-sm text-nowrap'>{`${adminUser?.first_name} ${adminUser?.last_name}`}</span>
+            <span className='text-sm text-nowrap'>{`${user.first_name} ${user.last_name}`}</span>
           </motion.div>
         </button>
       </PopoverTrigger>

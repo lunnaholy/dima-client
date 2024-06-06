@@ -1,8 +1,12 @@
 import { Button, Input } from "@nextui-org/react";
 import { useCallback, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { DarkModeToggler } from "../components/darkmode/darkModeToggler";
+import { api } from "../../api";
+import { toast } from "react-toastify";
 
 export function LoginPage() {
+  const navigate = useNavigate();
   const [displayPassword, setDisplayPassword] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -15,7 +19,15 @@ export function LoginPage() {
       localStorage.setItem("email", formData.email);
       location.reload();
     } else {
-      console.log(formData);
+      api.auth.login({
+        username: formData.email,
+        password: formData.password
+      }).then(_data => {
+        navigate("/dashboard");
+      }).catch(err => {
+        // TODO сделать нормальный вывод ошибок
+        toast.error(err.status);
+      });
     }
   }, [formData]);
 
@@ -32,6 +44,7 @@ export function LoginPage() {
   };
 
   useEffect(() => {
+    localStorage.removeItem("access_token");
     if(formData.email.length > 0) setDisplayPassword(true);
     else setDisplayPassword(false);
   }, []);
@@ -39,14 +52,14 @@ export function LoginPage() {
   return (
     <>
       <div className="flex flex-col items-center justify-center w-full h-screen bg-[url(/Bg.png)] bg-cover bg-center">
-        <div className="bg-white rounded-xl p-8 shadow flex flex-col gap-[8px] md:min-w-[515px]">
+        <div className="bg-background rounded-xl p-8 shadow flex flex-col gap-[8px] md:min-w-[515px]">
           <h2>Вход</h2>
           <span className="font-medium">в личный кабинет коворкинга</span>
           <div className="mt-2">
             <Input
-              label="Email"
+              label="Имя пользователя"
               name="email"
-              placeholder="Введите ваш Email"
+              placeholder="Введите имя пользователя"
               variant="bordered"
               defaultValue={formData.email}
               isDisabled={displayPassword}
@@ -76,6 +89,8 @@ export function LoginPage() {
             <Link className="text-primary" to="/reset">Восстановить аккаунт</Link>
           </div>
         </div>
+        <br/>
+        <DarkModeToggler collapsed={false} />
       </div>
     </>
   )
