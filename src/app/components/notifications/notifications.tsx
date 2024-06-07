@@ -1,10 +1,16 @@
 import { useAppDispatch } from "../../../hooks/useAppDispatch";
 import { useAppSelector } from "../../../hooks/useAppSelector";
-import { FaCircleInfo, FaFolderMinus, FaTrashCan } from "react-icons/fa6";
+import { FaCircleExclamation, FaCircleInfo, FaFolderMinus, FaThumbsDown, FaThumbsUp, FaTrashCan, FaTriangleExclamation } from "react-icons/fa6";
 import { clearNotifications, markAsReaded } from "../../store/notifications/reducer";
-import { INotification, NotificationIcon } from "../../store/notifications/types";
+import { INotification, NotificationAction, NotificationIcon, NotificationPayload, OpenPageAction } from "../../store/notifications/types";
 import { getNormalizedDate, getNormalizedTime } from "../../../utils";
 import { useEffect } from "react";
+import { Button } from "@nextui-org/react";
+import { Link } from "react-router-dom";
+
+function isOpenPageAction(payload: NotificationPayload): payload is OpenPageAction {
+  return payload.action === NotificationAction.OPEN_PAGE;
+}
 
 export function NotificationsList() {
   const dispatch = useAppDispatch(); 
@@ -41,13 +47,16 @@ export function NotificationsList() {
 
 function Notification({ notification }: { notification: INotification }) {
   return (
-    <div className="flex gap-2 w-full">
-      <div className={`min-w-12 min-h-12 max-w-12 max-h-12 ${getNotificationBgColor(notification.icon)} flex items-center justify-center rounded-lg`}>
+    <div className="flex gap-3 w-full">
+      <div className={`min-w-10 min-h-10 max-w-10 max-h-10 ${getNotificationBgColor(notification.icon)} flex items-center justify-center rounded-lg`}>
         {getNotificationIcon(notification.icon, getNotificationTextColor(notification.icon))}
       </div>
       <div className="flex flex-col flex-grow max-w-sm">
         <span className="font-medium">{ notification.title }</span>
         <span className="text-sm max-w-sm text-wrap">{ notification.message }</span>
+        {isOpenPageAction(notification.payload) && (
+          <Button className="mt-2" size="sm" as={Link} to={notification.payload.url}>{ notification.payload.text }</Button>
+        )}
       </div>
       <div className="flex flex-col items-end">
         <span className="font-medium">{ getNormalizedTime(notification.datetime) }</span>
@@ -59,8 +68,17 @@ function Notification({ notification }: { notification: INotification }) {
 
 function getNotificationBgColor(icon: NotificationIcon) {
   switch (icon) {
-    case NotificationIcon.DEFAULT:
-      return "bg-zinc-100 dark:bg-zinc-800";
+    case NotificationIcon.INFO:
+      return "bg-primary-300 dark:bg-primary-100";
+    case NotificationIcon.WARNING:
+      return "bg-yellow-300 dark:bg-yellow-800";
+    case NotificationIcon.DANGER:
+      return "bg-red-300 dark:bg-red-900";
+    case NotificationIcon.LIKE:
+      return "bg-green-300 dark:bg-green-900";
+    case NotificationIcon.DISLIKE:
+      return "bg-neutral-300 dark:bg-neutral-800";
+    case NotificationIcon.DEFAULT: 
     default:
       return "bg-zinc-100 dark:bg-zinc-800";
   };
@@ -68,8 +86,17 @@ function getNotificationBgColor(icon: NotificationIcon) {
 
 function getNotificationTextColor(icon: NotificationIcon) {
   switch (icon) {
+    case NotificationIcon.INFO:
+      return "text-primary-700 dark:text-primary-300";
+    case NotificationIcon.WARNING:
+      return "text-yellow-700 dark:text-yellow-300";
+    case NotificationIcon.DANGER:
+      return "text-red-600 dark:text-red-400";
+    case NotificationIcon.LIKE:
+      return "text-green-700 dark:text-green-400";
+    case NotificationIcon.DISLIKE:
+      return "text-neutral-700 dark:text-neutral-300";
     case NotificationIcon.DEFAULT:
-      return "text-zinc-500 dark:text-zinc-400";
     default:
       return "text-zinc-500 dark:text-zinc-400";
   };
@@ -78,8 +105,16 @@ function getNotificationTextColor(icon: NotificationIcon) {
 function getNotificationIcon(icon: NotificationIcon, color: string = "text-zinc-500 dark:text-zinc-400") {
   const mainClass = `text-md`;
   switch (icon) {
+    case NotificationIcon.WARNING:
+      return <FaTriangleExclamation className={`${mainClass} ${color}`} />;
+    case NotificationIcon.DANGER:
+      return <FaCircleExclamation className={`${mainClass} ${color}`} />;
+    case NotificationIcon.LIKE:
+      return <FaThumbsUp className={`${mainClass} ${color}`} />;
+    case NotificationIcon.DISLIKE:
+      return <FaThumbsDown className={`${mainClass} ${color}`} />;  
+    case NotificationIcon.INFO:
     case NotificationIcon.DEFAULT:
-      return <FaCircleInfo className={`${mainClass} ${color}`} />;
     default:
       return <FaCircleInfo className={`${mainClass} ${color}`} />;
   };

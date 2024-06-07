@@ -131,7 +131,7 @@ function Notifications({ collapsed }: { collapsed: boolean }) {
   const unreadCount = useAppSelector(state => state.notifications.unreadCount);
 
   return (
-    <Popover showArrow={false} placement="top" portalContainer={document.getElementById("main")!}>
+    <Popover showArrow={false} placement="top" portalContainer={document.getElementById("main")!} backdrop="blur">
       <PopoverTrigger className="shadow-none border-none bg-none outline-none">
         <button
           className={

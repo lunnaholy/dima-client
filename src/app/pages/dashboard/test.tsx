@@ -1,10 +1,8 @@
 import { Button } from "@nextui-org/react";
-import { NotificationsList } from "../../components/notifications/notifications";
 import { Column, ColumnType, TableBuilder } from "../../components/tables/tableBuilder";
 import { addNotification } from "../../store/notifications/reducer";
-import { useEffect } from "react";
 import { useAppDispatch } from "../../../hooks/useAppDispatch";
-import { NotificationIcon } from "../../store/notifications/types";
+import { NotificationAction, NotificationIcon } from "../../store/notifications/types";
 
 export function TestPage() {
   const dispatch = useAppDispatch();
@@ -15,13 +13,14 @@ export function TestPage() {
       datetime: new Date().toISOString(),
       title: "Hello, world!",
       message: "В рендер-движке можно будет прописать уведомления с кнопками, при нажатии на которые будет выполняться какое-то действие",
-      icon: NotificationIcon.DEFAULT
+      icon: NotificationIcon.DISLIKE,
+      payload: {
+        action: NotificationAction.OPEN_PAGE,
+        text: "Открыть",
+        url: "https://vk.com/bebra"
+      }
     }));
   };
-
-  useEffect(() => {
-    createNotification();
-  }, []);
 
   const columns: Column[] = [
     {
