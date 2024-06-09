@@ -1,5 +1,4 @@
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input, Textarea } from "@nextui-org/react";
-import { FormBuilder } from "../../forms/formBuilder";
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 
@@ -17,15 +16,15 @@ export function OpenTicketModal({ isOpen, onOpenChange, onSubmit }: { isOpen: bo
     setLoading(false);
   }, [isOpen]);
 
-  const submit = (data: any) => {
-    setLoading(true);
-    onSubmit(data);
-  };
+  // const submit = (data: any) => {
+  //   setLoading(true);
+  //   onSubmit(data);
+  // };
 
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange} portalContainer={document.getElementById("main")!} backdrop="blur" scrollBehavior="outside">
       <ModalContent>
-        {(onClose) => (
+        {(_onClose) => (
           <>
             <ModalHeader>Новое обращение</ModalHeader>
             <form onSubmit={formHook.handleSubmit(onSubmit)}>

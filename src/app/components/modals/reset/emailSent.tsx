@@ -1,15 +1,13 @@
-import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@nextui-org/react";
-import { getDayName, getLottieOptions, getPortal } from "../../../../utils";
-import * as EmailSent from '../../../../static/lottie/EmailSent.json';
+import { Button, Modal, ModalContent } from "@nextui-org/react";
+import { getPortal } from "../../../../utils";
 import { Link } from "react-router-dom";
-import Lottie from "../../lottie/lottie";
 
 export function EmailSentModal({ title, isOpen, onOpenChange }: { title: string, isOpen: boolean, onOpenChange: (isOpen: boolean) => void }) {
   return (
     <>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} backdrop="blur" placement="center" scrollBehavior="outside" size="sm" portalContainer={getPortal()}>
         <ModalContent>
-          {(onClose) => (
+          {(_onClose) => (
             <div className="flex flex-col gap-3 p-4 mt-2 mb-2 items-center justify-center">
               <span className="text-2xl font-bold">{title}</span>
               <span className="text-center">Уже отправили на вашу почту ссылку для сброса пароля.</span>

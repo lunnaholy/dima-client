@@ -14,10 +14,10 @@ export interface Billing {
 export function BillingsAPI(baseUrl: string) {
   return {
     list: async () => {
-      return await crud.get(`${baseUrl}/billings/`, undefined, true) as ApiResponse<Location[]>;
+      return await crud.get(`${baseUrl}/billings/`, undefined, true) as ApiResponse<Billing[]>;
     },
     get: async (id: number) => {
-      return await crud.get(`${baseUrl}/billings/${id}`, undefined, true) as ApiResponse<Location>;
+      return await crud.get(`${baseUrl}/billings/${id}`, undefined, true) as ApiResponse<Billing>;
     }
   }
 }

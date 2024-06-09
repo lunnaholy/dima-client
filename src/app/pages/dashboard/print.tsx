@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-import { Lock } from "../../components/lock/lock";
 import { Printer } from "../../components/printer/printer";
-import { set } from "react-hook-form";
 import { FaFile, FaHandPointer } from "react-icons/fa6";
 import { Button } from "@nextui-org/react";
 

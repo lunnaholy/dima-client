@@ -1,4 +1,4 @@
-import { Button, Input, Modal, ModalContent, Spacer, useDisclosure } from "@nextui-org/react";
+import { Modal, ModalContent, Spacer, useDisclosure } from "@nextui-org/react";
 import { FaX } from "react-icons/fa6";
 
 export function InvitesModal({ disclosure }: { disclosure: ReturnType<typeof useDisclosure>}) {

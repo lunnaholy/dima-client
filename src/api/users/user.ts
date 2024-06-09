@@ -18,19 +18,19 @@ interface CreateUserParams {
 export function UsersAPI(baseUrl: string) {
   return {
     list: async () => {
-      return await crud.get(`${baseUrl}/client/users/`, undefined, true) as ApiResponse<User[]>;
+      return await crud.get(`${baseUrl}/users/`, undefined, true) as ApiResponse<User[]>;
     },
     create: async (params: CreateUserParams) => {
-      return await crud.post(`${baseUrl}/client/users/`, params, true) as ApiResponse<User>;
+      return await crud.post(`${baseUrl}/users/`, params, true) as ApiResponse<User>;
     },
     get: async (id: number) => {
-      return await crud.get(`${baseUrl}/client/users/${id}`, undefined, true) as ApiResponse<User>;
+      return await crud.get(`${baseUrl}/users/${id}`, undefined, true) as ApiResponse<User>;
     },
     update: async (id: number, params: Partial<CreateUserParams>) => {
-      return await crud.put(`${baseUrl}/client/users/${id}`, params, true) as ApiResponse<User>;
+      return await crud.put(`${baseUrl}/users/${id}`, params, true) as ApiResponse<User>;
     },
     delete: async (id: number) => {
-      return await crud.delete(`${baseUrl}/client/users/${id}`, true) as ApiResponse<boolean>;
+      return await crud.delete(`${baseUrl}/users/${id}`, true) as ApiResponse<boolean>;
     }
   }
 }

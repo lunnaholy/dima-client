@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Input } from "@nextui-org/react";
 
 export type InputType = "text" | "password" | "email" | "datetime-local";

@@ -1,8 +1,7 @@
-import { Button, Spinner } from "@nextui-org/react";
+import { Spinner } from "@nextui-org/react";
 import { useCallback, useState } from "react";
 import { FaLock } from "react-icons/fa6";
 
-// TODO: перенести Lock в API (как будет готово)
 export interface Lock {
   id: number;
   displayName: string;

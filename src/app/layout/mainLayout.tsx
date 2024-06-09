@@ -12,6 +12,7 @@ export function Layout({ children }: { children?: React.ReactNode; }) {
   const dispatch = useAppDispatch(); 
 
   useEffect(() => {
+    api.users.list();
     api.auth.me().then(data => {
       dispatch(setUser(data.data));
     });
