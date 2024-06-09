@@ -1,4 +1,4 @@
-import { Modal, ModalContent, ModalHeader, ModalBody, Input, ModalFooter, Button } from "@nextui-org/react";
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button } from "@nextui-org/react";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { FormBuilder } from "../forms/formBuilder";

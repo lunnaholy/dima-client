@@ -35,7 +35,7 @@ export function PaymentPage() {
           {data.length > 0 && (
             <div className="flex flex-row flex-wrap max-w-[720px] gap-3 p-4">
               {data.map((payment, index) => {
-                return <Payment amount={payment.amount} date={payment.date} title={payment.description} status={payment.paid ? "success" : "pending"} />
+                return <Payment key={index} amount={payment.amount} date={payment.date} title={payment.description} status={payment.paid ? "success" : "pending"} />
               })}
             </div>
           )}
