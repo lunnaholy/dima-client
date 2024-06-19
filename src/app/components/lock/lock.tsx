@@ -22,7 +22,7 @@ export function Lock({ lock }: { lock: Lock }) {
       .catch(err => {
         console.log(err);
         toast.error("При открытии замка произошла ошибка!");
-      })
+      });
   }, []);
 
   return (

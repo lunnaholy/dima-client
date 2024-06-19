@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import React, { useEffect } from "react";
 import { Input } from "@nextui-org/react";
 
-export type InputType = "text" | "password" | "email" | "datetime-local";
+export type InputType = "text" | "password" | "email" | "datetime-local" | "office-type" | "user" | "office" | "renter";
 
 export interface InputField {
   type: InputType;
