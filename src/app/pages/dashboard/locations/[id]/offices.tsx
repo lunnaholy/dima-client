@@ -1,9 +1,10 @@
 import { useParams } from "react-router-dom";
 import { TableBuilder } from "../../../../components/tables/tableBuilder";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { api } from "../../../../../api";
 import { toast } from "react-toastify";
 import { Office } from "../../../../../api/officies/officies";
+import { FaLock, FaLockOpen } from "react-icons/fa6";
 
 export function LocationOfficesPage() {
   const { id } = useParams() as { id: string };
@@ -17,6 +18,30 @@ export function LocationOfficesPage() {
       .catch(err => {
         console.log(err);
         toast.error("Произошла ошибка при загрузке офисов!");
+      });
+  }, []);
+
+  const openLock = useCallback((id: number) => {
+    api.locks.unlock(id)
+      .then(data => {
+        console.log(data);
+        toast.success("Замок был успешно открыт!");
+      })
+      .catch(err => {
+        console.log(err);
+        toast.error("При открытии замка произошла ошибка!");
+      });
+  }, []);
+
+  const closeLock = useCallback((id: number) => {
+    api.locks.lock(id)
+      .then(data => {
+        console.log(data);
+        toast.success("Замок был успешно закрыт!");
+      })
+      .catch(err => {
+        console.log(err);
+        toast.error("При закрытии замка произошла ошибка!");
       });
   }, []);
 
@@ -53,6 +78,15 @@ export function LocationOfficesPage() {
               }, {
                 label: "Этаж",
                 key: "floor"
+              }, {
+                label: "Действия",
+                key: "action",
+                render(_value, row: Office) {
+                  <div className="flex flex-row gap-2">
+                    <span onClick={() => openLock(row.id)} className="cursor-pointer"><FaLockOpen /></span>
+                    <span onClick={() => closeLock(row.id)} className="cursor-pointer"><FaLock /></span>
+                  </div>
+                },
               }
             ]}
             data={offices}

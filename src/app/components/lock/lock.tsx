@@ -1,6 +1,8 @@
 import { Spinner } from "@nextui-org/react";
 import { useCallback, useState } from "react";
 import { FaLock } from "react-icons/fa6";
+import { api } from "../../../api";
+import { toast } from "react-toastify";
 
 export interface Lock {
   id: number;
@@ -12,9 +14,15 @@ export function Lock({ lock }: { lock: Lock }) {
 
   const openLock = useCallback(() => {
     setIsOpening(true);
-    setTimeout(() => {
-      setIsOpening(false);
-    }, 3000);
+    api.locks.unlock(lock.id)
+      .then(data => {
+        console.log(data);
+        toast.success("Замок был успешно открыт!");
+      })
+      .catch(err => {
+        console.log(err);
+        toast.error("При открытии замка произошла ошибка!");
+      })
   }, []);
 
   return (
