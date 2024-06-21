@@ -10,6 +10,7 @@ import { AuthLayout } from "./layout/authLayout";
 import 'react-toastify/dist/ReactToastify.css';
 import { LocationsPage } from "./pages/dashboard/locations";
 import { LocationOfficesPage } from "./pages/dashboard/locations/[id]/offices";
+import { UsersPage } from "./pages/dashboard/users";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,7 @@ const router = createBrowserRouter([
       { path: "/dashboard", element: <DashboardHome /> },
       { path: "/dashboard/locations", element: <LocationsPage /> },
       { path: "/dashboard/locations/:id/offices", element: <LocationOfficesPage /> },
+      { path: "/dashboard/users", element: <UsersPage /> },
       // { path: "/dashboard/locks", element: <LocksPage /> },
       // { path: "/dashboard/print", element: <PrintPage /> },
       // { path: "/dashboard/tickets", element: <TicketsPage /> },

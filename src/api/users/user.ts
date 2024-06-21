@@ -2,17 +2,14 @@ import { User } from "../auth/auth";
 import crud, { ApiResponse } from "../crud";
 
 interface CreateUserParams {
-  id: number,
   username: string,
-  hashed_password: string,
-  salt: string,
+  password: string,
   first_name: string,
   middle_name: string,
   last_name: string,
   role: number,
   renter: number,
   phone_number: string,
-  telegram: number
 }
 
 export function UsersAPI(baseUrl: string) {
