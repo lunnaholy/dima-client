@@ -1,6 +1,7 @@
 import { useDisclosure } from "@nextui-org/react";
 import { FormModalBuilder, InputField } from "../formModalBuilder";
 import { api } from "../../../../api";
+import { User } from "../../../../api/auth/auth";
 import { toast } from "react-toastify";
 
 const fields: InputField[] = [
@@ -47,7 +48,7 @@ const fields: InputField[] = [
   },
 ]
 
-interface ICreateUserData {
+interface IUpdateUserData {
   username: string;
   first_name: string;
   last_name: string;
@@ -58,9 +59,9 @@ interface ICreateUserData {
   password: string;
 }
 
-export function CreateUserModal({ disclosure }: { disclosure: ReturnType<typeof useDisclosure> }) {
-  const onSubmit = async (data: ICreateUserData) => {
-    api.users.create({
+export function UpdateUserModal({ disclosure, user }: { disclosure: ReturnType<typeof useDisclosure>, user: User | null }) {
+  const onSubmit = async (data: IUpdateUserData) => {
+    api.users.update(user!.id, {
       first_name: data.first_name,
       last_name: data.last_name,
       middle_name: data.middle_name,
@@ -71,23 +72,46 @@ export function CreateUserModal({ disclosure }: { disclosure: ReturnType<typeof 
       username: data.username,
     })
       .then(_data => {
-        toast.success("Пользователь успешно создан!");
+        toast.success("Пользователь успешно обновлён!");
         disclosure.onClose();
       })
       .catch(err => {
         console.log(err);
-        toast.error("Произошла ошибка при создании пользователя!");
+        toast.error("Произошла ошибка при обновлении пользователя!");
+      })
+  }
+
+  const onDelete = () => {
+    api.users.delete(user!.id)
+      .then(_data => {
+        toast.success("Пользователь успешно удалён!");
+        disclosure.onClose();
+      })
+      .catch(err => {
+        console.log(err);
+        toast.error("Произошла ошибка при удалении пользователя!");
       })
   }
 
   return (
     <FormModalBuilder
-      title="Создание пользователя"
+      title="Редактирование пользователя"
       isOpen={disclosure.isOpen}
       onOpenChange={disclosure.onOpenChange}
       onSubmit={onSubmit}
       fields={fields}
-      submitButtonText="Создать"
+      submitButtonText="Сохранить"
+      displayDeleteButton={true}
+      onDelete={onDelete}
+      defaultValues={{
+        username: user!.username,
+        first_name: user!.first_name,
+        last_name: user!.last_name,
+        middle_name: user!.middle_name,
+        role: String(user!.role),
+        renter: String(user!.renter),
+        phone_number: user!.phone_number
+      }}
     />
   )
 }

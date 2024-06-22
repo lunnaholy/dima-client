@@ -1,8 +1,10 @@
 import { useForm } from "react-hook-form";
 import React, { useEffect } from "react";
 import { Input } from "@nextui-org/react";
+import { UserRoleHandbook } from "../handbooks/userRoleHandbook";
+import { RenterHandbook } from "../handbooks/renterHandbook";
 
-export type InputType = "text" | "password" | "email" | "datetime-local" | "office-type" | "user" | "office" | "renter";
+export type InputType = "text" | "password" | "email" | "datetime-local" | "user-role" | "renter";
 
 export interface InputField {
   type: InputType;
@@ -44,6 +46,22 @@ export function FormBuilder({ formHook, fields, defaultValues }: { formHook: Ret
             defaultValue={String(defaultValues?.[field.name] || "")}
           />
         );
+        break;
+      case 'user-role':
+        return <UserRoleHandbook
+          register={formHook.register(field.name, { required: "Это поле обязательно для заполнения" })}
+          isInvalid={!!formHook.formState.errors[field.name]}
+          errorMessage={formHook.formState.errors[field.name]?.message?.toString() || ""}
+          defaultSelectedKey={String(defaultValues?.[field.name] || "")}
+        />;
+        break;
+      case 'renter':
+        return <RenterHandbook
+          register={formHook.register(field.name, { required: "Это поле обязательно для заполнения" })}
+          isInvalid={!!formHook.formState.errors[field.name]}
+          errorMessage={formHook.formState.errors[field.name]?.message?.toString() || ""}
+          defaultSelectedKey={String(defaultValues?.[field.name] || "")}
+        />;
         break;
     }
   };
