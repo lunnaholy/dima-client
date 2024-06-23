@@ -2,6 +2,7 @@ import { useDisclosure } from "@nextui-org/react";
 import { FormModalBuilder, InputField } from "../formModalBuilder";
 import { api } from "../../../../api";
 import { toast } from "react-toastify";
+import { getIdFromUserRoleHandbook, getIdFromRenterHandbook } from "../../../../utils/getIdFromHandbook";
 
 const fields: InputField[] = [
   {
@@ -60,14 +61,17 @@ interface ICreateUserData {
 
 export function CreateUserModal({ disclosure }: { disclosure: ReturnType<typeof useDisclosure> }) {
   const onSubmit = async (data: ICreateUserData) => {
+    const role = await getIdFromUserRoleHandbook(data.role);
+    const renter = await getIdFromRenterHandbook(data.renter);
+    
     api.users.create({
       first_name: data.first_name,
       last_name: data.last_name,
       middle_name: data.middle_name,
       password: data.password,
       phone_number: data.phone_number,
-      renter: Number(data.renter),
-      role: Number(data.role),
+      renter: Number(renter),
+      role: Number(role),
       username: data.username,
     })
       .then(_data => {

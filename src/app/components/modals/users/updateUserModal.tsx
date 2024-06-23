@@ -3,6 +3,7 @@ import { FormModalBuilder, InputField } from "../formModalBuilder";
 import { api } from "../../../../api";
 import { User } from "../../../../api/auth/auth";
 import { toast } from "react-toastify";
+import { getIdFromRenterHandbook, getIdFromUserRoleHandbook } from "../../../../utils/getIdFromHandbook";
 
 const fields: InputField[] = [
   {
@@ -61,14 +62,17 @@ interface IUpdateUserData {
 
 export function UpdateUserModal({ disclosure, user }: { disclosure: ReturnType<typeof useDisclosure>, user: User | null }) {
   const onSubmit = async (data: IUpdateUserData) => {
+    const role = await getIdFromUserRoleHandbook(data.role);
+    const renter = await getIdFromRenterHandbook(data.renter);
+
     api.users.update(user!.id, {
       first_name: data.first_name,
       last_name: data.last_name,
       middle_name: data.middle_name,
       password: data.password,
       phone_number: data.phone_number,
-      renter: Number(data.renter),
-      role: Number(data.role),
+      renter: Number(renter),
+      role: Number(role),
       username: data.username,
     })
       .then(_data => {
