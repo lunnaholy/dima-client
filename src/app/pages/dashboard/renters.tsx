@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 import { api } from "../../../api";
 import { toast } from "react-toastify";
 import { Renter } from "../../../api/renters/renters";
+import { Chip } from "@nextui-org/react";
+import { Link } from "react-router-dom";
+import { User } from "../../../api/auth/auth";
 
 export function RentersPage() {
   const [renters, setRenters] = useState<Renter[]>([]);
@@ -44,16 +47,24 @@ export function RentersPage() {
                 key: "email"
               }, {
                 label: "Владелец",
-                key: "holder"
-              }, {
-                label: "Действия",
-                key: "actions",
-                render(_value, _row: Renter) {
+                key: "holder",
+                render(value, _row) {
+                  const [user, setUser] = useState<User | null>(null);
+                  
+                  useEffect(() => {
+                    api.users.get(value)
+                      .then(data => {
+                        setUser(data.data)
+                      })
+                      .catch(err => {
+                        console.log(err);
+                        toast.error("Произошла ошибка при загрузке данных пользователя!");
+                      });
+                  }, []);
+
                   return (
-                    <div className="flex flex-row gap-2">
-                      {/* TODO наверное тут тоже будут какие-то кнопки */}
-                    </div>
-                  )
+                    <Chip as={Link} to={"/dashboard/users"} variant="dot" color="primary">{ user?.first_name } {user?.last_name}</Chip>
+                  );
                 },
               }
             ]}
