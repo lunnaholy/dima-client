@@ -3,9 +3,22 @@ import { useEffect, useState } from "react";
 import { api } from "../../../api";
 import { toast } from "react-toastify";
 import { User } from "../../../api/auth/auth";
+import { FaPencil, FaPlus } from "react-icons/fa6";
+import { Button, useDisclosure } from "@nextui-org/react";
+import { CreateUserModal } from "../../components/modals/users/createUserModal";
+import { UpdateUserModal } from "../../components/modals/users/updateUserModal";
 
 export function UsersPage() {
   const [users, setUsers] = useState<User[]>([]);
+  const [user, setUser] = useState<User | null>(null);
+
+  const createUserModalDisclosure = useDisclosure();
+  const editUserModalDisclosure = useDisclosure();
+
+  const editUser = (user: User) => {
+    setUser(user);
+    editUserModalDisclosure.onOpen();
+  };
 
   useEffect(() => {
     api.users.list()
@@ -16,16 +29,32 @@ export function UsersPage() {
         console.log(err);
         toast.error("Произошла ошибка при загрузке пользователей!");
       });
-  }, []);
+  }, [
+    createUserModalDisclosure.isOpen,
+    editUserModalDisclosure.isOpen
+  ]);
 
   return (
     <>
+      <CreateUserModal disclosure={createUserModalDisclosure} />
+      <UpdateUserModal disclosure={editUserModalDisclosure} user={user} />
       <div className="flex flex-col gap-2 p-2 md:p-4">
         <div className="flex flex-col gap-2 mb-2">
           <span className="font-bold text-2xl">Пользователи</span>
         </div>
         <div className="flex flex-col gap-2 mb-2">
-          <span className="font-sm">Ниже отображены все пользователи, связанные с Вами..</span>
+          <span className="font-sm">Ниже отображены все пользователи, связанные с Вами.</span>
+        </div>
+        <div className="flex flex-row gap-4 items-center mb-2">
+          <Button
+            startContent={<FaPlus />}
+            color="primary"
+            variant="solid"
+            className="max-w-fit"
+            onClick={() => createUserModalDisclosure.onOpen()}
+          >
+            Создать пользователя
+          </Button>
         </div>
         <div className="flex flex-col gap-2 mb-2">
           <TableBuilder
@@ -54,10 +83,10 @@ export function UsersPage() {
               }, {
                 label: "Действия",
                 key: "actions",
-                render(_value, _row: User) {
+                render(_value, row: User) {
                   return (
                     <div className="flex flex-row gap-2">
-                      
+                      <FaPencil className="cursor-pointer" onClick={() => editUser(row)} />
                     </div>
                   )
                 },
