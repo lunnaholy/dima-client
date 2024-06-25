@@ -1,4 +1,4 @@
-import { TableBuilder } from "../../components/tables/tableBuilder";
+import { ColumnType, TableBuilder } from "../../components/tables/tableBuilder";
 import { useEffect, useState } from "react";
 import { api } from "../../../api";
 import { toast } from "react-toastify";
@@ -61,28 +61,34 @@ export function UsersPage() {
             columns={[
               {
                 label: "Имя пользователя",
-                key: "username"
+                key: "username",
+                type: ColumnType.String
               }, {
                 label: "ФИО",
                 key: "names",
+                type: ColumnType.Custom,
                 render(_value, row: User) {
                   return (<span>{row.first_name}{row.middle_name ? ` ${row.middle_name} ` : ''}{row.last_name}</span>)
                 },
               }, {
                 label: "Роль",
                 key: "role",
+                type: ColumnType.String
               }, {
-                label: "phone_number",
-                key: "Номер телефона"
+                label: "Номер телефона",
+                key: "phone_number",
+                type: ColumnType.String
               }, {
                 label: "Telegram",
                 key: "telegram",
+                type: ColumnType.Custom,
                 render(value, _row) {
                   return (<span>{value !== 0 ? "Привязан" : "Не привязан"}</span>)
                 },
               }, {
                 label: "Действия",
                 key: "actions",
+                type: ColumnType.Custom,
                 render(_value, row: User) {
                   return (
                     <div className="flex flex-row gap-2">

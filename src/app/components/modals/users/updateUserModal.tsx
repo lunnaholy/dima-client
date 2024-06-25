@@ -105,16 +105,16 @@ export function UpdateUserModal({ disclosure, user }: { disclosure: ReturnType<t
       onSubmit={onSubmit}
       fields={fields}
       submitButtonText="Сохранить"
-      displayDeleteButton={true}
+      isSensitiveData={true}
       onDelete={onDelete}
       defaultValues={{
-        username: user!.username,
-        first_name: user!.first_name,
-        last_name: user!.last_name,
-        middle_name: user!.middle_name,
-        role: String(user!.role),
-        renter: String(user!.renter),
-        phone_number: user!.phone_number
+        username: user?.username || "",
+        first_name: user?.first_name || "",
+        last_name: user?.last_name || "",
+        middle_name: user?.middle_name || "",
+        role: String(user?.role || ""),
+        renter: String(user?.renter || ""),
+        phone_number: user?.phone_number || ""
       }}
     />
   )

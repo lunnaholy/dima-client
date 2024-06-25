@@ -3,9 +3,7 @@ import { useEffect, useState } from "react";
 import { api } from "../../../api";
 import { toast } from "react-toastify";
 import { Renter } from "../../../api/renters/renters";
-import { Chip } from "@nextui-org/react";
-import { Link } from "react-router-dom";
-import { User } from "../../../api/auth/auth";
+import { UserChip } from "../../components/chips/userChip";
 
 export function RentersPage() {
   const [renters, setRenters] = useState<Renter[]>([]);
@@ -49,22 +47,7 @@ export function RentersPage() {
                 label: "Владелец",
                 key: "holder",
                 render(value, _row) {
-                  const [user, setUser] = useState<User | null>(null);
-                  
-                  useEffect(() => {
-                    api.users.get(value)
-                      .then(data => {
-                        setUser(data.data)
-                      })
-                      .catch(err => {
-                        console.log(err);
-                        toast.error("Произошла ошибка при загрузке данных пользователя!");
-                      });
-                  }, []);
-
-                  return (
-                    <Chip as={Link} to={"/dashboard/users"} variant="dot" color="primary">{ user?.first_name } {user?.last_name}</Chip>
-                  );
+                  return <UserChip userId={value} />
                 },
               }
             ]}

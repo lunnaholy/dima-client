@@ -11,6 +11,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { LocationsPage } from "./pages/dashboard/locations";
 import { LocationOfficesPage } from "./pages/dashboard/locations/[id]/offices";
 import { UsersPage } from "./pages/dashboard/users";
+import { TestPage } from "./pages/dashboard/test";
+import { BillingsPage } from "./pages/dashboard/billings";
 
 const router = createBrowserRouter([
   {
@@ -37,15 +39,8 @@ const router = createBrowserRouter([
       { path: "/dashboard/locations", element: <LocationsPage /> },
       { path: "/dashboard/locations/:id/offices", element: <LocationOfficesPage /> },
       { path: "/dashboard/users", element: <UsersPage /> },
-      // { path: "/dashboard/locks", element: <LocksPage /> },
-      // { path: "/dashboard/print", element: <PrintPage /> },
-      // { path: "/dashboard/tickets", element: <TicketsPage /> },
-      // { path: "/dashboard/tickets/1", element: <TicketPage /> },
-      // { path: "/dashboard/employees", element: <EmployeesPage /> },
-      // { path: "/dashboard/payments", element: <PaymentPage /> },
-      // { path: "/dashboard/payments/1", element: <PaymentInfoPage /> },
-      // { path: "/dashboard/documents", element: <DocumentsPage /> },
-      // { path: "/dashboard/test", element: <TestPage /> },
+      { path: "/dashboard/payments", element: <BillingsPage /> },
+      { path: "/dashboard/test", element: <TestPage /> }
     ]
   }
 ]);

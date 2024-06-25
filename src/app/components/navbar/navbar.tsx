@@ -2,19 +2,14 @@ import { Card, Divider, Popover, PopoverTrigger, Avatar, PopoverContent, Listbox
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { api as _api, api } from "../../../api";
+import { api } from "../../../api";
 import {
   FaBell,
   FaBriefcase,
   FaBuilding,
   FaDoorClosed,
   FaGear,
-  FaHouse,
-  FaLock,
-  FaMoneyBill,
-  FaNoteSticky,
-  FaPencil,
-  FaPrint,
+  FaHouse, FaMoneyBill, FaPencil,
   FaUsers
 } from "react-icons/fa6";
 import { HiArrowRight, HiArrowLeft } from "react-icons/hi2";
@@ -38,27 +33,12 @@ export default function LayoutNavbar() {
   }, {
     path: '/dashboard/locations',
     icon: FaBuilding,
-    title: 'Переговорные',
+    title: 'Локации',
     color: "default"
   }, {
-    path: '/dashboard/locks',
-    icon: FaLock,
-    title: 'Замки',
-    color: "default"
-  }, {
-    path: '/dashboard/print',
-    icon: FaPrint,
-    title: 'Печать',
-    color: "default"
-  }, {
-    path: '/dashboard/tickets',
-    icon: FaNoteSticky,
-    title: 'Тикеты',
-    color: "default"
-  }, {
-    path: '/dashboard/employees',
+    path: '/dashboard/users',
     icon: FaUsers,
-    title: 'Сотрудники',
+    title: 'Пользователи',
     color: "default"
   }, {
     path: '/dashboard/payments',

@@ -92,6 +92,7 @@ export function CreateUserModal({ disclosure }: { disclosure: ReturnType<typeof 
       onSubmit={onSubmit}
       fields={fields}
       submitButtonText="Создать"
+      isSensitiveData={false}
     />
   )
 }

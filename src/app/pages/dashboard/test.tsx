@@ -1,11 +1,26 @@
-import { Button } from "@nextui-org/react";
+import { Button, useDisclosure } from "@nextui-org/react";
 import { Column, ColumnType, TableBuilder } from "../../components/tables/tableBuilder";
 import { addNotification } from "../../store/notifications/reducer";
 import { useAppDispatch } from "../../../hooks/useAppDispatch";
 import { NotificationAction, NotificationIcon } from "../../store/notifications/types";
+import { useState } from "react";
+import { ConfirmEditModal } from "../../components/modals/service/confirmEditModal";
+import { ConfirmDeleteModal } from "../../components/modals/service/confirmDeleteModal";
 
 export function TestPage() {
   const dispatch = useAppDispatch();
+
+  const editSensitiveDisclosure = useDisclosure();
+  const deleleleSensetiveDisclosure = useDisclosure();
+  const [data, setData] = useState<{}>({});
+
+  const onEdit = (data: any) => {
+    alert("Edit!")
+  };
+
+  const onDelete = () => {
+    alert("Delete!");
+  }
 
   const createNotification = () => {
     dispatch(addNotification({
@@ -51,6 +66,9 @@ export function TestPage() {
 
   return (
     <>
+      <ConfirmEditModal isOpen={editSensitiveDisclosure.isOpen} onOpenChange={editSensitiveDisclosure.onOpenChange} callback={onEdit} data={data} />
+      <ConfirmDeleteModal isOpen={deleleleSensetiveDisclosure.isOpen} onOpenChange={deleleleSensetiveDisclosure.onOpenChange} callback={onDelete} />
+
       <TableBuilder
         columns={columns}
         data={items}
@@ -58,6 +76,8 @@ export function TestPage() {
         />
       {/* <NotificationsList /> */}
       <Button onClick={createNotification}>Add notification</Button>
+      <Button onClick={() => editSensitiveDisclosure.onOpen()}>Test edit</Button>
+      <Button onClick={() => deleleleSensetiveDisclosure.onOpen()}>Test delete</Button>
     </>
   )
 }

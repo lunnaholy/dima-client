@@ -49,6 +49,9 @@ export function AuthAPI(baseUrl: string) {
       await crud.post(`${baseUrl}/auth/logout`, {}, true) as string;
       localStorage.clear();
       location.href = "/";
+    },
+    generateTelegramLink: async() => {
+      return await crud.get(`${baseUrl}/auth/generate-telegram-link`, undefined, true) as ApiResponse<{link: string}>;
     }
   }
 }

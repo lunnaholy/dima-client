@@ -3,9 +3,7 @@ import { useEffect, useState } from "react";
 import { api } from "../../../api";
 import { toast } from "react-toastify";
 import { Billing } from "../../../api/billings/billings";
-import { Renter } from "../../../api/renters/renters";
-import { Chip } from "@nextui-org/react";
-import { Link } from "react-router-dom";
+import { RenterChip } from "../../components/chips/renterChip";
 
 export function BillingsPage() {
   const [billings, setBillings] = useState<Billing[]>([]);
@@ -36,38 +34,27 @@ export function BillingsPage() {
               {
                 label: "Сумма",
                 key: "amount",
+                type: ColumnType.Custom,
                 render(value, _row) {
                   return (<span>{Number(value).toLocaleString()}</span>)
                 },
               }, {
                 label: "Провайдер",
-                key: "provider"
+                key: "provider",
+                type: ColumnType.Number,
               }, {
                 label: "Статус",
                 key: "paid",
+                type: ColumnType.Custom,
                 render(value, _row) {
                   return (<span>{value ? 'Оплачен' : 'Не оплачен'}</span>)
                 },
               }, {
-                label: "payer",
-                key: "Плательщик",
+                label: "Плательщик",
+                key: "payer",
+                type: ColumnType.Custom,
                 render(value, _row) {
-                  const [payer, setPayer] = useState<Renter | null>(null);
-                  
-                  useEffect(() => {
-                    api.renters.get(value)
-                      .then(data => {
-                        setPayer(data.data)
-                      })
-                      .catch(err => {
-                        console.log(err);
-                        toast.error("Произошла ошибка при загрузке данных арендатора!");
-                      });
-                  }, []);
-
-                  return (
-                    <Chip as={Link} to={"/dashboard/renters"} variant="dot" color="primary">{ payer?.display_name }</Chip>
-                  );
+                  return <RenterChip renterId={value} />
                 },
               }, {
                 label: "Дата",
