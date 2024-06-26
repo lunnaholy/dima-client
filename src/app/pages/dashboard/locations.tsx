@@ -23,7 +23,7 @@ export function LocationsPage() {
   return (
     <>
       <div className="flex flex-col gap-2 p-2 md:p-4">
-        <div className="flex flex-col gap-2 mb-2">
+        <div className="flex flex-col gap-2">
           <span className="font-bold text-2xl">Локации</span>
         </div>
         <div className="flex flex-col gap-2 mb-2">

@@ -41,14 +41,14 @@ export default function LayoutNavbar() {
     title: 'Пользователи',
     color: "default"
   }, {
+    path: '/dashboard/renters',
+    icon: FaBriefcase,
+    title: 'Арендаторы',
+    color: "default"
+  }, {
     path: '/dashboard/payments',
     icon: FaMoneyBill,
     title: 'Платежи',
-    color: "default"
-  }, {
-    path: '/dashboard/test',
-    icon: FaBriefcase,
-    title: 'Тест',
     color: "default"
   }];
 

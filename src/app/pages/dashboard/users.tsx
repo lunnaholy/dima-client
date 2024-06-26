@@ -39,13 +39,15 @@ export function UsersPage() {
       <CreateUserModal disclosure={createUserModalDisclosure} />
       <UpdateUserModal disclosure={editUserModalDisclosure} user={user} />
       <div className="flex flex-col gap-2 p-2 md:p-4">
-        <div className="flex flex-col gap-2 mb-2">
-          <span className="font-bold text-2xl">Пользователи</span>
-        </div>
-        <div className="flex flex-col gap-2 mb-2">
-          <span className="font-sm">Ниже отображены все пользователи, связанные с Вами.</span>
-        </div>
-        <div className="flex flex-row gap-4 items-center mb-2">
+        <div className="flex flex-row justify-between items-center mb-2">
+          <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2">
+              <span className="font-bold text-2xl">Пользователи</span>
+            </div>
+            <div className="flex flex-col gap-2">
+              <span className="font-sm">Ниже отображены все пользователи, связанные с Вами.</span>
+            </div>
+          </div>
           <Button
             startContent={<FaPlus />}
             color="primary"

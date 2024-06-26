@@ -1,4 +1,4 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import LayoutNavbar from "../components/navbar/navbar";
 import useDarkMode from "use-dark-mode";
 import { ToastContainer, toast } from "react-toastify";
@@ -8,6 +8,7 @@ import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { setUser } from "../store/user/reducer";
 import { User } from "../../api/auth/auth";
 import { Button } from "@nextui-org/react";
+import { Navigation } from "../components/navigation/navigation";
 
 export function Layout({ children }: { children?: React.ReactNode; }) {
   const darkMode = useDarkMode(false);
@@ -57,6 +58,7 @@ export function Layout({ children }: { children?: React.ReactNode; }) {
                 <Button variant="flat" color="primary" size="sm" onClick={linkTelegram} className="mt-2 max-w-fit">Класс, хочу попробовать</Button>
               </div>
             )}
+            <Navigation />
             {children || <Outlet />}
           </div>
         </div>
