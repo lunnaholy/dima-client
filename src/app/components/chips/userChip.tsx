@@ -1,16 +1,17 @@
-import { Chip } from "@nextui-org/react";
+import { Chip, useDisclosure } from "@nextui-org/react";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { api } from "../../../api";
 import { User } from "../../../api/auth/auth";
+import { UserModal } from "./modals/userModal";
 
 export function UserChip({ userId }: { userId: number }) {
-  const [user, setUser] = useState<User | null>(null);
+  const [item, setItem] = useState<User | null>(null);
+  const disclosure = useDisclosure();
 
   useEffect(() => {
     api.users.get(userId)
       .then(data => {
-        setUser(data.data)
+        setItem(data.data)
       })
       .catch(err => {
         console.log(err);
@@ -19,10 +20,11 @@ export function UserChip({ userId }: { userId: number }) {
 
   return (
     <>
-      {user !== null && (
-        <Chip as={Link} to={"/dashboard/users"} variant="dot" color="primary">{user?.first_name} {user?.last_name}</Chip>
+      <UserModal isOpen={disclosure.isOpen} onOpenChange={disclosure.onOpenChange} item={item!} />
+      {item !== null && (
+        <Chip className="cursor-pointer" onClick={disclosure.onOpen} variant="dot" color="primary">{item?.first_name} {item?.last_name}</Chip>
       )}
-      {user == null && (
+      {item == null && (
         <Chip variant="dot" color="default">н/д</Chip>
       )}
     </>

@@ -1,11 +1,12 @@
-import { Chip } from "@nextui-org/react";
+import { Chip, useDisclosure } from "@nextui-org/react";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { api } from "../../../api";
 import { Renter } from "../../../api/renters/renters";
+import { RenterModal } from "./modals/renterModal";
 
 export function RenterChip({ renterId }: { renterId: number }) {
   const [item, setItem] = useState<Renter | null>(null);
+  const disclosure = useDisclosure();
 
   useEffect(() => {
     api.renters.get(renterId)
@@ -19,8 +20,9 @@ export function RenterChip({ renterId }: { renterId: number }) {
 
   return (
     <>
+      <RenterModal isOpen={disclosure.isOpen} onOpenChange={disclosure.onOpenChange} item={item!} />
       {item !== null && (
-        <Chip as={Link} to={"/dashboard/renters"} variant="dot" color="primary">{item?.display_name}</Chip>
+        <Chip className="cursor-pointer" onClick={disclosure.onOpen} variant="dot" color="primary">{item?.display_name}</Chip>
       )}
       {item == null && (
         <Chip variant="dot" color="default">н/д</Chip>
