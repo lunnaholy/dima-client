@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import LayoutNavbar from "../components/navbar/navbar";
 import useDarkMode from "use-dark-mode";
 import { ToastContainer, toast } from "react-toastify";
@@ -13,14 +13,20 @@ import { Navigation } from "../components/navigation/navigation";
 export function Layout({ children }: { children?: React.ReactNode; }) {
   const darkMode = useDarkMode(false);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [user, setDUser] = useState<User | null>(null);
 
   useEffect(() => {
-    api.users.list();
     api.auth.me().then(data => {
       setDUser(data.data);
       dispatch(setUser(data.data));
     });
+  }, []);
+
+  useEffect(() => {
+    if(location.href.indexOf("selectLocation") == -1 && !localStorage.getItem("locationId")) {
+      navigate("/dashboard/selectLocation");
+    }
   }, []);
 
   const linkTelegram = useCallback(() => {

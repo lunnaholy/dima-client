@@ -1,6 +1,6 @@
 import { Card, Divider, Popover, PopoverTrigger, Avatar, PopoverContent, Listbox, ListboxItem } from "@nextui-org/react";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { api } from "../../../api";
 import {
@@ -19,38 +19,56 @@ import { useAppSelector } from "../../../hooks/useAppSelector";
 
 export default function LayoutNavbar() {
   const [collapsed, setCollapsed] = useState(localStorage.getItem('sidebarCollapsed') === 'true' ? true : false);
+  const location = useAppSelector(state => state.location.location);
+  const [links, setLinks] = useState<any[]>([]);
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
     localStorage.setItem('sidebarCollapsed', (!collapsed).toString());
   }
 
-  const links = [{
-    path: '/dashboard',
-    icon: FaHouse,
-    title: 'Главная',
-    color: "default"
-  }, {
-    path: '/dashboard/locations',
-    icon: FaBuilding,
-    title: 'Локации',
-    color: "default"
-  }, {
-    path: '/dashboard/users',
-    icon: FaUsers,
-    title: 'Пользователи',
-    color: "default"
-  }, {
-    path: '/dashboard/renters',
-    icon: FaBriefcase,
-    title: 'Арендаторы',
-    color: "default"
-  }, {
-    path: '/dashboard/payments',
-    icon: FaMoneyBill,
-    title: 'Платежи',
-    color: "default"
-  }];
+  useEffect(() => {
+    if (location.id !== 0) {
+      setLinks([{
+        path: '/dashboard',
+        icon: FaHouse,
+        title: 'Главная',
+        color: "default"
+      }, {
+        path: '/dashboard/locations',
+        icon: FaBuilding,
+        title: 'Локации',
+        color: "default"
+      }, {
+        path: '/dashboard/users',
+        icon: FaUsers,
+        title: 'Пользователи',
+        color: "default"
+      }, {
+        path: '/dashboard/renters',
+        icon: FaBriefcase,
+        title: 'Арендаторы',
+        color: "default"
+      }, {
+        path: '/dashboard/offices',
+        icon: FaDoorClosed,
+        title: 'Офисы',
+        color: "default"
+      }, {
+        path: '/dashboard/payments',
+        icon: FaMoneyBill,
+        title: 'Платежи',
+        color: "default"
+      }]);
+    } else {
+      setLinks([{
+        path: '/dashboard/selectLocation',
+        icon: FaHouse,
+        title: 'Выбор локации',
+        color: "default"
+      }]);
+    }
+  }, []);
 
   const variants = {
     collapsed: {
@@ -85,6 +103,25 @@ export default function LayoutNavbar() {
           </a>
         </motion.div>
       </div>
+
+      {!collapsed && (
+        <>
+          {location.id !== 0 && (
+            <div className="flex flex-row items-center justify-between w-full">
+              <div className="flex flex-col">
+                <span className="font-semibold text-sm text-default-500">Локация:</span>
+                <span className="font-semibold text-sm">{location.display_name}</span>
+              </div>
+              <Link to="/dashboard/selectProfile" className="font-semibold text-sm text-primary">Сменить</Link>
+            </div>
+          )}
+          {location.id == 0 && (
+            <div className="flex flex-row items-center justify-between w-full">
+              <span className="font-semibold text-sm">Локация не выбрана</span>
+            </div>
+          )}
+        </>
+      )}
 
       <div className="flex flex-col gap-2">
         {links.map(link => (

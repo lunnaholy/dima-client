@@ -1,25 +1,37 @@
-import { useParams } from "react-router-dom";
-import { TableBuilder } from "../../../../components/tables/tableBuilder";
-import { useCallback, useEffect, useState } from "react";
-import { api } from "../../../../../api";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { Office } from "../../../../../api/officies/officies";
 import { FaLock, FaLockOpen } from "react-icons/fa6";
+import { api } from "../../../api";
+import { Office } from "../../../api/officies/officies";
+import { ColumnType, TableBuilder } from "../../components/tables/tableBuilder";
+import { Checkbox } from "@nextui-org/react";
 
-export function LocationOfficesPage() {
-  const { id } = useParams() as { id: string };
+export function OfficesPage() {
   const [offices, setOffices] = useState<Office[]>([]);
+
+  const [filterByLocation, setFilterByLocation] = useState<boolean>(true);
 
   useEffect(() => {
     api.officies.list()
-      .then(data => {
-        setOffices(data.data.filter(row => row.location === Number(id)));
+      .then(async response => {
+        if (!filterByLocation) return setOffices(response.data);
+        const data: Office[] = [];
+        for (let index = 0; index < response.data.length; index++) {
+          const element = response.data[index];
+          if (element.location == Number(localStorage.getItem("locationId"))) {
+            data.push(element);
+          }
+        }
+
+        setOffices(data);
       })
       .catch(err => {
         console.log(err);
         toast.error("Произошла ошибка при загрузке офисов!");
       });
-  }, []);
+  }, [
+    filterByLocation
+  ]);
 
   const openLock = useCallback((id: number) => {
     api.locks.unlock(id)
@@ -54,33 +66,44 @@ export function LocationOfficesPage() {
         <div className="flex flex-col gap-2 mb-2">
           <span className="font-sm">Ниже отображены доступные офисы в выбранной ранее локации.</span>
         </div>
+        <div className="flex flex-col gap-2 mb-4">
+          <Checkbox onChange={(e: ChangeEvent<HTMLInputElement>) => { setFilterByLocation(e.target.checked) }} defaultChecked>Фильтрация по локации</Checkbox>
+        </div>
         <div className="flex flex-col gap-2 mb-2">
           <TableBuilder
             columns={[
               {
                 label: "Название",
-                key: "display_name"
+                key: "display_name",
+                type: ColumnType.String
               }, {
                 label: "Тип офиса",
-                key: "office_type"
+                key: "office_type",
+                type: ColumnType.String
               }, {
                 label: "Площадь",
-                key: "area"
+                key: "area",
+                type: ColumnType.String
               }, {
                 label: "Цена",
-                key: "price"
+                key: "price",
+                type: ColumnType.String
               }, {
                 label: "Кол-во комнат",
-                key: "room_count"
+                key: "room_count",
+                type: ColumnType.String
               }, {
                 label: "Локация",
-                key: "location"
+                key: "location",
+                type: ColumnType.String
               }, {
                 label: "Этаж",
-                key: "floor"
+                key: "floor",
+                type: ColumnType.String
               }, {
                 label: "Действия",
                 key: "action",
+                type: ColumnType.Custom,
                 render(_value: any, row: Office) {
                   <div className="flex flex-row gap-2">
                     <span onClick={() => openLock(row.id)} className="cursor-pointer"><FaLockOpen /></span>

@@ -15,10 +15,10 @@ export interface Office {
 export function OfficiesAPI(baseUrl: string) {
   return {
     list: async () => {
-      return await crud.get(`${baseUrl}/officies/`, undefined, true) as ApiResponse<Office[]>;
+      return await crud.get(`${baseUrl}/offices/`, undefined, true) as ApiResponse<Office[]>;
     },
     get: async (id: number) => {
-      return await crud.get(`${baseUrl}/officies/${id}`, undefined, true) as ApiResponse<Office>;
+      return await crud.get(`${baseUrl}/offices/${id}`, undefined, true) as ApiResponse<Office>;
     }
   }
 }

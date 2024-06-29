@@ -14,6 +14,8 @@ import { UsersPage } from "./pages/dashboard/users";
 import { TestPage } from "./pages/dashboard/test";
 import { BillingsPage } from "./pages/dashboard/billings";
 import { RentersPage } from "./pages/dashboard/renters";
+import { SelectLocation } from "./pages/dashboard/selectLocation";
+import { OfficesPage } from "./pages/dashboard/offices";
 
 const router = createBrowserRouter([
   {
@@ -42,7 +44,9 @@ const router = createBrowserRouter([
       { path: "/dashboard/users", element: <UsersPage /> },
       { path: "/dashboard/renters", element: <RentersPage /> },
       { path: "/dashboard/payments", element: <BillingsPage /> },
-      { path: "/dashboard/test", element: <TestPage /> }
+      { path: "/dashboard/test", element: <TestPage /> },
+      { path: "/dashboard/selectLocation", element: <SelectLocation /> },
+      { path: "/dashboard/offices", element: <OfficesPage /> },
     ]
   }
 ]);
