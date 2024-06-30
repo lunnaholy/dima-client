@@ -34,28 +34,19 @@ export function BillingsPage() {
               {
                 label: "Сумма",
                 key: "amount",
-                type: ColumnType.Custom,
-                render(value, _row) {
-                  return (<span>{Number(value).toLocaleString()}</span>)
-                },
+                type: ColumnType.Number,
               }, {
                 label: "Провайдер",
                 key: "provider",
-                type: ColumnType.Number,
+                type: ColumnType.String,
               }, {
                 label: "Статус",
                 key: "paid",
-                type: ColumnType.Custom,
-                render(value, _row) {
-                  return (<span>{value ? 'Оплачен' : 'Не оплачен'}</span>)
-                },
+                type: ColumnType.Boolean
               }, {
                 label: "Плательщик",
                 key: "payer",
-                type: ColumnType.Custom,
-                render(value, _row) {
-                  return <RenterChip renterId={value} />
-                },
+                type: ColumnType.Renter
               }, {
                 label: "Дата",
                 key: "date",

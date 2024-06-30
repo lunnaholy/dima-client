@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { TableBuilder } from "../../components/tables/tableBuilder";
+import { ColumnType, TableBuilder } from "../../components/tables/tableBuilder";
 import { OfficeLocation } from "../../../api/locations/locations";
 import { FaDoorClosed } from "react-icons/fa6";
 import { useEffect, useState } from "react";
@@ -34,19 +34,24 @@ export function LocationsPage() {
             columns={[
               {
                 label: "Название",
-                key: "display_name"
+                key: "display_name",
+                type: ColumnType.String
               }, {
                 label: "Адрес",
-                key: "address"
+                key: "address",
+                type: ColumnType.String
               }, {
                 label: "Город",
-                key: "city"
+                key: "city",
+                type: ColumnType.String
               }, {
                 label: "Станция метро",
-                key: "metro_station"
+                key: "metro_station",
+                type: ColumnType.String
               }, {
                 label: "Район",
-                key: "district"
+                key: "district",
+                type: ColumnType.String
               }, {
                 label: "Действия",
                 key: "actions",
@@ -57,6 +62,7 @@ export function LocationsPage() {
                     </div>
                   )
                 },
+                type: ColumnType.Custom
               }
             ]}
             data={locations}

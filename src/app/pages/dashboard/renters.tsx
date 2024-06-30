@@ -1,4 +1,4 @@
-import { TableBuilder } from "../../components/tables/tableBuilder";
+import { ColumnType, TableBuilder } from "../../components/tables/tableBuilder";
 import { useEffect, useState } from "react";
 import { api } from "../../../api";
 import { toast } from "react-toastify";
@@ -33,22 +33,24 @@ export function RentersPage() {
             columns={[
               {
                 label: "Название",
-                key: "display_name"
+                key: "display_name",
+                type: ColumnType.String
               }, {
                 label: "ОРГН",
-                key: "orgn"
+                key: "orgn",
+                type: ColumnType.String
               }, {
                 label: "Номер телефона",
-                key: "phone_number"
+                key: "phone_number",
+                type: ColumnType.String
               }, {
                 label: "Адрес почты",
-                key: "email"
+                key: "email",
+                type: ColumnType.String
               }, {
                 label: "Владелец",
                 key: "holder",
-                render(value, _row) {
-                  return <UserChip userId={value} />
-                },
+                type: ColumnType.User
               }
             ]}
             data={renters}

@@ -83,15 +83,15 @@ export function OfficesPage() {
               }, {
                 label: "Площадь",
                 key: "area",
-                type: ColumnType.String
+                type: ColumnType.Number
               }, {
                 label: "Цена",
                 key: "price",
-                type: ColumnType.String
+                type: ColumnType.Number
               }, {
                 label: "Кол-во комнат",
                 key: "room_count",
-                type: ColumnType.String
+                type: ColumnType.Number
               }, {
                 label: "Локация",
                 key: "location",
@@ -99,7 +99,7 @@ export function OfficesPage() {
               }, {
                 label: "Этаж",
                 key: "floor",
-                type: ColumnType.String
+                type: ColumnType.Number
               }, {
                 label: "Действия",
                 key: "action",

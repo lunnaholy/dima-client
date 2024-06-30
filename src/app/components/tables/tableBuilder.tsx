@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { getNormalizedDate, getNormalizedDateTime } from "../../../utils";
 import { Pagination, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react";
+import { UserChip } from "../chips/userChip";
+import { RenterChip } from "../chips/renterChip";
+import { FaCopy } from "react-icons/fa6";
 
 export enum ColumnType {
   Date = "date",
@@ -8,6 +11,8 @@ export enum ColumnType {
   String = "string",
   Number = "number",
   Boolean = "boolean",
+  User = "user",
+  Renter = "renter",
   Custom = "custom"
 }
 
@@ -119,20 +124,46 @@ export function TableBuilder({ rowsPerPage = 10, columns, data }: TableBuilderPr
   )
 }
 
+function CopyableElement({ children }: { children: any }) {
+  const onClick = useCallback(() => {
+    navigator.clipboard.writeText(children);
+  }, []);
+
+  return (
+    <div className="flex flex-row gap-2 items-center">
+      { children }
+      <FaCopy className="text-foreground-400 hover:text-foreground-500 cursor-pointer transition-all" onClick={onClick} />
+    </div>
+  )
+}
+
 function renderCell(row: any, column: Column) {
-  if (column.type == ColumnType.Date) {
-    return getNormalizedDate(row[column.key]);
-  } else if (column.type == ColumnType.DateTime) {
-    return getNormalizedDateTime(row[column.key]);
-  } else if (column.type == ColumnType.Number) {
-    return row[column.key].toString();
-  } else if (column.type == ColumnType.Boolean) {
-    return row[column.key] ? "да" : "нет";
-  } else if (column.type == ColumnType.String) {
-    return row[column.key];
-  } else if (column.type == ColumnType.Custom) {
-    return column.render!(row[column.key], row);
-  } else {
-    return "н/д";
+  switch (column.type) {
+    case ColumnType.Date:
+      return <CopyableElement>{ getNormalizedDate(row[column.key]) }</CopyableElement>
+
+    case ColumnType.DateTime:
+      return <CopyableElement>{ getNormalizedDateTime(row[column.key]) }</CopyableElement>
+
+    case ColumnType.Number:
+      return <CopyableElement>{ row[column.key].toString() }</CopyableElement>
+
+    case ColumnType.Boolean:
+      return <CopyableElement>{ row[column.key] ? "да" : "нет" }</CopyableElement>
+ 
+    case ColumnType.String:
+      return <CopyableElement>{ row[column.key] }</CopyableElement>
+
+    case ColumnType.User:
+      return <UserChip userId={row[column.key]} />
+      
+    case ColumnType.Renter:
+      return <RenterChip renterId={row[column.key]} />
+
+    case ColumnType.Custom:
+      return column.render!(row[column.key], row);
+
+    default:
+      return "н/д";
   }
 }

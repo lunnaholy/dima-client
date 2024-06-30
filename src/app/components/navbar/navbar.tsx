@@ -112,7 +112,7 @@ export default function LayoutNavbar() {
                 <span className="font-semibold text-sm text-default-500">Локация:</span>
                 <span className="font-semibold text-sm">{location.display_name}</span>
               </div>
-              <Link to="/dashboard/selectProfile" className="font-semibold text-sm text-primary">Сменить</Link>
+              <Link to="/dashboard/selectLocation" className="font-semibold text-sm text-primary">Сменить</Link>
             </div>
           )}
           {location.id == 0 && (

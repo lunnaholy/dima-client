@@ -12,9 +12,9 @@ export function TestPage() {
 
   const editSensitiveDisclosure = useDisclosure();
   const deleleleSensetiveDisclosure = useDisclosure();
-  const [data, setData] = useState<{}>({});
+  const [data, _setData] = useState<{}>({});
 
-  const onEdit = (data: any) => {
+  const onEdit = (_data: any) => {
     alert("Edit!")
   };
 
